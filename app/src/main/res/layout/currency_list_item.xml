@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/currency_list_item_bg"
+    android:layout_margin="10dp"
+    >
+
+    <CheckBox
+        android:id="@+id/favourite_check_box"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        style="?android:attr/starStyle"
+        />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginRight="120dp"
+        >
+
+        <TextView
+            android:id="@+id/full_name_cur"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text = "US Dollar"
+            android:textSize="20sp"
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="10dp"
+            />
+
+        <TextView
+            android:id="@+id/plural_name_cur"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text = "USD"
+            android:textSize="16sp"
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginBottom="10dp"
+            />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/currency_cost"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:text="$55.00"
+        android:textSize="20sp"
+        android:layout_gravity="center|end"
+        android:gravity="right"
+        android:paddingRight="15dp"
+        />
+</LinearLayout>
