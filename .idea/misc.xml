@@ -5,9 +5,11 @@
       <map>
         <entry key="..\:/Courses Android dev/Currency Converter/app/src/main/res/drawable/currency_cost_bg.xml" value="0.1725" />
         <entry key="..\:/Courses Android dev/Currency Converter/app/src/main/res/drawable/currency_ilist_item_bg.xml" value="0.1725" />
+        <entry key="..\:/Courses Android dev/Currency Converter/app/src/main/res/drawable/currency_list_item_bg.xml" value="0.1725" />
         <entry key="..\:/Courses Android dev/Currency Converter/app/src/main/res/drawable/ic_launcher_background.xml" value="0.1725" />
         <entry key="..\:/Courses Android dev/Currency Converter/app/src/main/res/drawable/swap_curency_block_bg.xml" value="0.1725" />
         <entry key="..\:/Courses Android dev/Currency Converter/app/src/main/res/drawable/swap_currency_bg.xml" value="0.1725" />
+        <entry key="..\:/Courses Android dev/Currency Converter/app/src/main/res/layout/activity_main.xml" value="0.25416666666666665" />
         <entry key="..\:/Courses Android dev/Currency Converter/app/src/main/res/layout/currency_list_item.xml" value="0.25416666666666665" />
         <entry key="..\:/Courses Android dev/Currency Converter/app/src/main/res/layout/fragment_currency_list.xml" value="0.264" />
       </map>
