@@ -1,5 +1,7 @@
 package com.example.currencyconverter.di
 
+import android.net.NetworkCapabilities
+import android.net.NetworkRequest
 import com.example.currencyconverter.BuildConfig
 import com.example.currencyconverter.data.currencyapi.CurrencyApi
 import okhttp3.OkHttpClient

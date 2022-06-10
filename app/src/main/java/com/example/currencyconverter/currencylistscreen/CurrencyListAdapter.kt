@@ -23,8 +23,8 @@ class CurrencyListAdapter (
         val item = getItem(position)
         holder.binding.apply {
             fullNameCur.text = item.name
-            pluralNameCur.text = item.name_plural
-            currencyCost.text = "${item.symbol_native}  ${item.value}"
+            pluralNameCur.text = item.symbol + " / " + item.code
+            currencyCost.text = item.symbol_native
             favouriteCheckBox.isChecked = false
         }
     }
