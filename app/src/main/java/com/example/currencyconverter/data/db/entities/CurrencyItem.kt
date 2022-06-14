@@ -12,5 +12,6 @@ data class CurrencyItem(
     val rounding: Int,
     @PrimaryKey
     val code: String,
-    val name_plural: String
+    val name_plural: String,
+    var isFavourite: Boolean = false
 )

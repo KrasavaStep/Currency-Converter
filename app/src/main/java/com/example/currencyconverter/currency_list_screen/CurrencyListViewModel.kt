@@ -1,9 +1,6 @@
-package com.example.currencyconverter.currencylistscreen
+package com.example.currencyconverter.currency_list_screen
 
-import android.text.Editable
-import android.text.TextWatcher
 import android.util.Log
-import androidx.appcompat.widget.AppCompatEditText
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -12,10 +9,10 @@ import com.example.currencyconverter.DataEvent
 import com.example.currencyconverter.ResultState
 import com.example.currencyconverter.data.Repository
 import com.example.currencyconverter.mappers.CurrencyMappers
-import com.example.currencyconverter.data.currencyapi.models.CurrencyApiModel
-import com.example.currencyconverter.data.currencyapi.models.CurrencyApiResponse
-import com.example.currencyconverter.data.currencyapi.models.CurrencyExchangeModel
-import com.example.currencyconverter.data.currencyapi.models.CurrencyExchangeResponse
+import com.example.currencyconverter.data.currency_api.models.CurrencyApiModel
+import com.example.currencyconverter.data.currency_api.models.CurrencyApiResponse
+import com.example.currencyconverter.data.currency_api.models.CurrencyExchangeModel
+import com.example.currencyconverter.data.currency_api.models.CurrencyExchangeResponse
 import com.example.currencyconverter.data.db.entities.CurrencyItem
 import com.example.currencyconverter.data.db.entities.ExchangeItem
 import kotlinx.coroutines.*
@@ -25,7 +22,6 @@ import retrofit2.Response
 import java.lang.RuntimeException
 
 class CurrencyListViewModel(private val repository: Repository) : ViewModel() {
-    val getCurrenciesFromDb: LiveData<List<CurrencyItem>> = repository.getAllCurrencyFromDb
 
     private val _currencies = MutableLiveData<ResultState<List<CurrencyApiModel>>>()
     val currencies: LiveData<ResultState<List<CurrencyApiModel>>> = _currencies
@@ -53,7 +49,6 @@ class CurrencyListViewModel(private val repository: Repository) : ViewModel() {
     private val _secondCurrencyName = MutableLiveData<DataEvent<String>>()
     val secondCurrencyName: LiveData<DataEvent<String>> = _secondCurrencyName
 
-
     fun getAllCurrencies() {
         _currencies.postValue(ResultState.Loading())
         repository.getAllCurrency(object : Callback<CurrencyApiResponse> {
@@ -66,13 +61,37 @@ class CurrencyListViewModel(private val repository: Repository) : ViewModel() {
                     setDataToCurrencyTable(currencyApiModelList)
                     ResultState.Success(currencyApiModelList)
                 } ?: ResultState.Error(RuntimeException("Response body is null"))
+                Log.d("MyApp", response.toString())
             }
 
             override fun onFailure(call: Call<CurrencyApiResponse>, t: Throwable) {
                 _currencies.postValue(ResultState.Error(t))
+                Log.d("MyApp", t.message.toString())
             }
 
         })
+    }
+
+    fun getCurrenciesFromDb(isFavourite: Boolean) : LiveData<List<CurrencyItem>>{
+        return if (isFavourite){
+            repository.getFavouritesCurrencies
+        } else {
+            repository.getAllCurrencyFromDb
+        }
+    }
+
+    fun updateCurrency(currencyItem: CurrencyItem){
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.updateCurrencyItem(currencyItem)
+        }
+    }
+
+    fun getDataForSearch(search: String) : LiveData<List<CurrencyItem>>{
+        return if (search.isBlank()){
+            repository.getAllCurrencyFromDb
+        } else {
+            repository.getDataForSearch("%$search%")
+        }
     }
 
 
@@ -115,7 +134,6 @@ class CurrencyListViewModel(private val repository: Repository) : ViewModel() {
                 val data = linkedMapOf<CurrencyItem, ExchangeItem>()
                 val firstCurrencyItem = async {
                     return@async repository.getCurrencyByCode(curCode1)
-
                 }
                 val firstCurrencyExRates = async {
                     return@async repository.getExchangeRateForCurrency(curCode1)

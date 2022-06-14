@@ -1,4 +1,4 @@
-package com.example.currencyconverter.data.currencyapi.models
+package com.example.currencyconverter.data.currency_api.models
 
 data class CurrencyExchangeResponse(
     val meta: HashMap<String, String>,

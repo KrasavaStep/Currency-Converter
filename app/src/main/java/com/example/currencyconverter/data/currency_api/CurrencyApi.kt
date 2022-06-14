@@ -1,8 +1,8 @@
-package com.example.currencyconverter.data.currencyapi
+package com.example.currencyconverter.data.currency_api
 
 import com.example.currencyconverter.BuildConfig
-import com.example.currencyconverter.data.currencyapi.models.CurrencyApiResponse
-import com.example.currencyconverter.data.currencyapi.models.CurrencyExchangeResponse
+import com.example.currencyconverter.data.currency_api.models.CurrencyApiResponse
+import com.example.currencyconverter.data.currency_api.models.CurrencyExchangeResponse
 import retrofit2.Call
 import retrofit2.http.GET
 

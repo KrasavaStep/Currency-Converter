@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/currencyListFragment"
+            android:title="Currency converter" />
+        <item
+            android:id="@+id/cryptocurrencyFragment"
+            android:title="Cryptocurrency" />
+        <item
+            android:id="@+id/stockMarketFragment"
+            android:title="Stock market" />
+    </group>
+</menu>

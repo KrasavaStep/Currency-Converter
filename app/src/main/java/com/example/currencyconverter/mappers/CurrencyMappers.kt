@@ -1,8 +1,7 @@
 package com.example.currencyconverter.mappers
 
-import com.example.currencyconverter.data.currencyapi.models.CurrencyApiModel
-import com.example.currencyconverter.data.currencyapi.models.CurrencyApiResponse
-import com.example.currencyconverter.data.currencyapi.models.CurrencyExchangeModel
+import com.example.currencyconverter.data.currency_api.models.CurrencyApiModel
+import com.example.currencyconverter.data.currency_api.models.CurrencyExchangeModel
 import com.example.currencyconverter.data.db.entities.CurrencyItem
 import com.example.currencyconverter.data.db.entities.ExchangeItem
 

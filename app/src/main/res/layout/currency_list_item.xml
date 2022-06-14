@@ -34,7 +34,7 @@
             />
 
         <TextView
-            android:id="@+id/plural_name_cur"
+            android:id="@+id/currency_code"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             tools:text = "USD"
