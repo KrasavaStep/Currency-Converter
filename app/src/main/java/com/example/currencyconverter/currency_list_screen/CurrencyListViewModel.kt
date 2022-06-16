@@ -39,11 +39,6 @@ class CurrencyListViewModel(private val repository: Repository) : ViewModel() {
     private val _errorResult = MutableLiveData<DataEvent<String>>()
     val errorResult: LiveData<DataEvent<String>> = _errorResult
 
-    private val _firstCurrencyCode = MutableLiveData<DataEvent<String>>()
-    val firstCurrencyCode: LiveData<DataEvent<String>> = _firstCurrencyCode
-    private val _secondCurrencyCode = MutableLiveData<DataEvent<String>>()
-    val secondCurrencyCode: LiveData<DataEvent<String>> = _secondCurrencyCode
-
     private val _firstCurrencyName = MutableLiveData<DataEvent<String>>()
     val firstCurrencyName: LiveData<DataEvent<String>> = _firstCurrencyName
     private val _secondCurrencyName = MutableLiveData<DataEvent<String>>()
@@ -74,9 +69,9 @@ class CurrencyListViewModel(private val repository: Repository) : ViewModel() {
 
     fun getCurrenciesFromDb(isFavourite: Boolean) : LiveData<List<CurrencyItem>>{
         return if (isFavourite){
-            repository.getFavouritesCurrencies
+            repository.favouritesCurrencies
         } else {
-            repository.getAllCurrencyFromDb
+            repository.allCurrencyFromDb
         }
     }
 
@@ -88,7 +83,7 @@ class CurrencyListViewModel(private val repository: Repository) : ViewModel() {
 
     fun getDataForSearch(search: String) : LiveData<List<CurrencyItem>>{
         return if (search.isBlank()){
-            repository.getAllCurrencyFromDb
+            repository.allCurrencyFromDb
         } else {
             repository.getDataForSearch("%$search%")
         }
@@ -210,12 +205,8 @@ class CurrencyListViewModel(private val repository: Repository) : ViewModel() {
         for ((i, cur) in data.keys.withIndex()) {
             if (i == 0) {
                 cur1 = cur
-                _firstCurrencyCode.postValue(DataEvent(cur.code))
-                _firstCurrencyName.postValue(DataEvent(cur.name))
             } else {
                 cur2 = cur
-                _secondCurrencyCode.postValue(DataEvent(cur.code))
-                _secondCurrencyName.postValue(DataEvent(cur.name))
             }
         }
         return convertCurrencies(

@@ -12,4 +12,7 @@
     <color name="list_item_bg_color">#A7E8D3</color>
     <color name="currency_cost_bg_color">#3FDAD5</color>
     <color name="currency_swap_block_bg">#DFF2F2</color>
+
+    <color name="low_percent_color">#FD0000</color>
+    <color name="high_percent_color">#219C05</color>
 </resources>

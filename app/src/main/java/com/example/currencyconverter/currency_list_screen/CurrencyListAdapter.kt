@@ -24,8 +24,8 @@ class CurrencyListAdapter(
         val item = getItem(position)
         holder.binding.apply {
             fullNameCur.text = item.name
-            val text = "${item.symbol} / ${item.code}"
-            currencyCode.text = text
+            val text = holder.itemView.context.getString(R.string.currency_code)
+            currencyCode.text = String.format(text, item.symbol, item.code)
             currencyCost.text = item.symbol_native
             favouriteCheckBox.isChecked = item.isFavourite
         }

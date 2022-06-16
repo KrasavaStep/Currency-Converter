@@ -19,10 +19,10 @@ interface CurrencyDao {
     @Insert(onConflict = REPLACE)
     suspend fun addExchangeData(item: ExchangeItem)
 
-    @Query("SELECT * FROM currency_table")
+    @Query("SELECT * FROM currency_table ORDER BY name")
     fun getAllData() : LiveData<List<CurrencyItem>>
 
-    @Query("SELECT * FROM currency_table WHERE isFavourite = 1")
+    @Query("SELECT * FROM currency_table WHERE isFavourite = 1 ORDER BY name")
     fun getFavouritesCurrencies(): LiveData<List<CurrencyItem>>
 
     @Query("SELECT * FROM ExchangeItem WHERE code = :code")
@@ -31,7 +31,7 @@ interface CurrencyDao {
     @Query("SELECT * FROM currency_table WHERE code = :code")
     suspend fun getCurrencyByCode(code: String) : CurrencyItem?
 
-    @Query("SELECT * FROM currency_table WHERE name LIKE :name")
+    @Query("SELECT * FROM currency_table WHERE name LIKE :name ORDER BY name")
     fun getDataForSearch(name: String) : LiveData<List<CurrencyItem>>
 
     @Update
@@ -41,5 +41,8 @@ interface CurrencyDao {
 
     @Insert(onConflict = REPLACE)
     suspend fun addCryptoData(item: CryptocurrencyItem)
+
+    @Query("SELECT * FROM cryptocurrency_data")
+    fun getAllCryptos(): LiveData<List<CryptocurrencyItem>>
 
 }

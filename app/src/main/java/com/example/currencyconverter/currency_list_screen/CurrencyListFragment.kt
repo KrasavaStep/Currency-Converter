@@ -105,14 +105,20 @@ class CurrencyListFragment : Fragment(R.layout.fragment_currency_list) {
 
         }
 
-        //TODO connection callback problem
-        val conn = NetworkConnection(requireContext())
-        conn.observe(viewLifecycleOwner) {
-            if (it) {
-                viewModel.getExchangeRates()
-                viewModel.getAllCurrencies()
+        MainActivity().networkConnection?.observe(viewLifecycleOwner){
+            if (it){
+                Toast.makeText(requireContext(), "ds", Toast.LENGTH_SHORT).show()
             }
         }
+
+        //TODO connection callback problem
+//        val conn = NetworkConnection(requireContext())
+//        conn.observe(viewLifecycleOwner) {
+//            if (it) {
+//                viewModel.getExchangeRates()
+//                viewModel.getAllCurrencies()
+//            }
+//        }
 
         viewModel.currencies.observe(viewLifecycleOwner) {
             when (it) {

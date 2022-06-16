@@ -6,4 +6,7 @@
 
     <string name="error_text">Something went wrong</string>
     <string name="currency_code">%1$s / %2$s</string>
+    <string name="crypto_price">%1$s$</string>
+    <string name="crypto_per_1h">1h:%1$s</string>
+    <string name="crypto_per_24h">24h:%1$s</string>
 </resources>

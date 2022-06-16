@@ -11,9 +11,6 @@
         <action
             android:id="@+id/action_currencyListFragment_to_cryptocurrencyFragment"
             app:destination="@id/cryptocurrencyFragment" />
-        <action
-            android:id="@+id/action_currencyListFragment_to_stockMarketFragment"
-            app:destination="@id/stockMarketFragment" />
     </fragment>
     <fragment
         android:id="@+id/cryptocurrencyFragment"
@@ -22,13 +19,16 @@
         <action
             android:id="@+id/action_cryptocurrencyFragment_to_currencyListFragment"
             app:destination="@id/currencyListFragment" />
+        <action
+            android:id="@+id/action_cryptocurrencyFragment_to_stockMarketFragment"
+            app:destination="@id/stockMarketFragment" />
     </fragment>
     <fragment
         android:id="@+id/stockMarketFragment"
         android:name="com.example.currencyconverter.stock_market_screen.StockMarketFragment"
         android:label="StockMarketFragment" >
         <action
-            android:id="@+id/action_stockMarketFragment_to_currencyListFragment"
-            app:destination="@id/currencyListFragment" />
+            android:id="@+id/action_stockMarketFragment_to_cryptocurrencyFragment"
+            app:destination="@id/cryptocurrencyFragment" />
     </fragment>
 </navigation>

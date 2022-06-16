@@ -1,5 +1,7 @@
 package com.example.currencyconverter
 
+import android.annotation.SuppressLint
+import android.content.Context
 import android.graphics.drawable.ColorDrawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

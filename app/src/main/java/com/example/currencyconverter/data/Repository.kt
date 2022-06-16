@@ -12,8 +12,9 @@ import com.example.currencyconverter.data.db.entities.ExchangeItem
 import retrofit2.Callback
 
 class Repository(private val currencyApi: CurrencyApi, private val currencyDao: CurrencyDao, private val cryptoApi: CryptocurrencyApi) {
-    val getAllCurrencyFromDb: LiveData<List<CurrencyItem>> = currencyDao.getAllData()
-    val getFavouritesCurrencies: LiveData<List<CurrencyItem>> = currencyDao.getFavouritesCurrencies()
+    val allCurrencyFromDb: LiveData<List<CurrencyItem>> = currencyDao.getAllData()
+    val favouritesCurrencies: LiveData<List<CurrencyItem>> = currencyDao.getFavouritesCurrencies()
+    val allCryptos: LiveData<List<CryptocurrencyItem>> = currencyDao.getAllCryptos()
 
     fun getAllCurrency(callback: Callback<CurrencyApiResponse>) {
         currencyApi.getAllCurrency().enqueue(callback)
@@ -74,9 +75,7 @@ class Repository(private val currencyApi: CurrencyApi, private val currencyDao: 
 
     //Cryptocurrency
 
-    suspend fun getCryptoList() = cryptoApi.getCryptoList()
-    suspend fun getCryptoPrices(id: String) = cryptoApi.getCryptoPrices(id)
-    suspend fun getCryptoData(id: String) = cryptoApi.getCryptoData(id)
+    suspend fun getCryptoData() = cryptoApi.getCryptoData()
 
     suspend fun addCryptoData(item: CryptocurrencyItem) = currencyDao.addCryptoData(item)
 }
