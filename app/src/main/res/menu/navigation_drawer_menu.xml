@@ -7,8 +7,5 @@
         <item
             android:id="@+id/cryptocurrencyFragment"
             android:title="Cryptocurrency" />
-        <item
-            android:id="@+id/stockMarketFragment"
-            android:title="Stock market" />
     </group>
 </menu>

@@ -16,11 +16,11 @@ interface CryptocurrencyApi {
         @Query("price_change_percentage") percentage: String = "1h"
     ) : List<CryptoDataResponse>
 
-    @GET("coins/{id}/ohlc?vs_currency=usd&days=1")
-    suspend fun getCryptoOHLCForYear(@Path("id") id: String) : List<List<Float>>
-
     @GET("coins/{id}/ohlc?vs_currency=usd&days=365")
-    suspend fun getCryptoOHLCForDay(@Path("id") id: String) : List<List<Float>>
+    suspend fun getCryptoOHLCForYear(@Path("id") id: String) : List<List<Double>>
+
+    @GET("coins/{id}/ohlc?vs_currency=usd&days=1")
+    suspend fun getCryptoOHLCForDay(@Path("id") id: String) : List<List<Double>>
 
     companion object {
         const val CRYPTOCURRENCY_API_URL = "https://api.coingecko.com/api/v3/"

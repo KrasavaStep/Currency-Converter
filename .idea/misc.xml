@@ -3,6 +3,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Courses Android dev/Currency Converter/app/src/main/res/drawable/chart_bg.xml" value="0.187" />
         <entry key="..\:/Courses Android dev/Currency Converter/app/src/main/res/drawable/crypto_item_bg.xml" value="0.216" />
         <entry key="..\:/Courses Android dev/Currency Converter/app/src/main/res/drawable/currency_cost_bg.xml" value="0.1725" />
         <entry key="..\:/Courses Android dev/Currency Converter/app/src/main/res/drawable/currency_ilist_item_bg.xml" value="0.1725" />
@@ -15,6 +16,7 @@
         <entry key="..\:/Courses Android dev/Currency Converter/app/src/main/res/layout/crypto_list_item.xml" value="0.264" />
         <entry key="..\:/Courses Android dev/Currency Converter/app/src/main/res/layout/currency_list_item.xml" value="0.25416666666666665" />
         <entry key="..\:/Courses Android dev/Currency Converter/app/src/main/res/layout/dialog_currency_list.xml" value="0.25416666666666665" />
+        <entry key="..\:/Courses Android dev/Currency Converter/app/src/main/res/layout/fragment_crypto_graphic.xml" value="0.25416666666666665" />
         <entry key="..\:/Courses Android dev/Currency Converter/app/src/main/res/layout/fragment_cryptocurrency.xml" value="0.25416666666666665" />
         <entry key="..\:/Courses Android dev/Currency Converter/app/src/main/res/layout/fragment_currency_list.xml" value="0.264" />
         <entry key="..\:/Courses Android dev/Currency Converter/app/src/main/res/layout/fragment_stockmarket.xml" value="0.25416666666666665" />

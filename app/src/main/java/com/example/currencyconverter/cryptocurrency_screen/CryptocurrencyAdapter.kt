@@ -67,8 +67,6 @@ class CryptocurrencyAdapter(
             x = item.priceChangePercentage24h * 100
             result = x.roundToInt() / 1000.0
             if (result >= 0.0) {
-                Log.d("MyApp", result.toString())
-                Log.d("MyApp", (result >= 0.0).toString())
                 percent1h.setTextColor(highPercent)
             } else {
                 percent1h.setTextColor(lowPercent)

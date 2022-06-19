@@ -8,7 +8,7 @@ data class CryptoDataResponse(
     @SerializedName("name") var name: String? = null,
     @SerializedName("image") var image: String? = null,
     @SerializedName("current_price") var currentPrice: Double,
-    @SerializedName("market_cap") var marketCap: Double? = null,
+    @SerializedName("market_cap") var marketCap: Double,
     @SerializedName("market_cap_rank") var marketCapRank: Double? = null,
     @SerializedName("fully_diluted_valuation") var fullyDilutedValuation: Double? = null,
     @SerializedName("total_volume") var totalVolume: Double? = null,

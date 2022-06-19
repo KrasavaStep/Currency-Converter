@@ -20,15 +20,21 @@
             android:id="@+id/action_cryptocurrencyFragment_to_currencyListFragment"
             app:destination="@id/currencyListFragment" />
         <action
-            android:id="@+id/action_cryptocurrencyFragment_to_stockMarketFragment"
-            app:destination="@id/stockMarketFragment" />
+            android:id="@+id/action_cryptocurrencyFragment_to_cryptoGraphicFragment"
+            app:destination="@id/cryptoGraphicFragment" />
     </fragment>
     <fragment
-        android:id="@+id/stockMarketFragment"
-        android:name="com.example.currencyconverter.stock_market_screen.StockMarketFragment"
+        android:id="@+id/cryptoGraphicFragment"
+        android:name="com.example.currencyconverter.crypto_graphic_screen.CryptoGraphicFragment"
         android:label="StockMarketFragment" >
         <action
             android:id="@+id/action_stockMarketFragment_to_cryptocurrencyFragment"
             app:destination="@id/cryptocurrencyFragment" />
+        <argument
+            android:name="cryptoid"
+            app:argType="string" />
+        <argument
+            android:name="marketCap"
+            app:argType="long" />
     </fragment>
 </navigation>

@@ -9,4 +9,8 @@
     <string name="crypto_price">%1$s$</string>
     <string name="crypto_per_1h">1h:%1$s</string>
     <string name="crypto_per_24h">24h:%1$s</string>
+    <string name="market_cap">Market capitalization %1$s$</string>
+    <string name="day_chart">Chart for day</string>
+    <string name="year_chart">Chart for year</string>
+    <string name="chart_desc">Prices of cryptocurrency</string>
 </resources>

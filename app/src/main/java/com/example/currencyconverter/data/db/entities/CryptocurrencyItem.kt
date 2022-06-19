@@ -11,7 +11,7 @@ data class CryptocurrencyItem(
     val name: String?,
     val image: String?,
     val currentPrice: Double,
-    val marketCap: Double?,
+    val marketCap: Double,
     val fullyDilutedValuation: Double?,
     val totalVolume: Double?,
     val high24h: Double?,

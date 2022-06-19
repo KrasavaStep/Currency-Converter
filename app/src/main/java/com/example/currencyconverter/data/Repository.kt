@@ -78,4 +78,7 @@ class Repository(private val currencyApi: CurrencyApi, private val currencyDao: 
     suspend fun getCryptoData() = cryptoApi.getCryptoData()
 
     suspend fun addCryptoData(item: CryptocurrencyItem) = currencyDao.addCryptoData(item)
+
+    suspend fun getOHLCForDay(id: String) = cryptoApi.getCryptoOHLCForDay(id)
+    suspend fun getOHLCForYear(id: String) = cryptoApi.getCryptoOHLCForYear(id)
 }
