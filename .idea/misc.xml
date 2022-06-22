@@ -9,7 +9,9 @@
         <entry key="..\:/Courses Android dev/Currency Converter/app/src/main/res/drawable/currency_ilist_item_bg.xml" value="0.1725" />
         <entry key="..\:/Courses Android dev/Currency Converter/app/src/main/res/drawable/currency_list_item_bg.xml" value="0.1725" />
         <entry key="..\:/Courses Android dev/Currency Converter/app/src/main/res/drawable/currency_name_btn_bg.xml" value="0.1935" />
+        <entry key="..\:/Courses Android dev/Currency Converter/app/src/main/res/drawable/ic_baseline_priority_high_24.xml" value="0.187" />
         <entry key="..\:/Courses Android dev/Currency Converter/app/src/main/res/drawable/ic_launcher_background.xml" value="0.1725" />
+        <entry key="..\:/Courses Android dev/Currency Converter/app/src/main/res/drawable/search_view_bg.xml" value="0.187" />
         <entry key="..\:/Courses Android dev/Currency Converter/app/src/main/res/drawable/swap_curency_block_bg.xml" value="0.1725" />
         <entry key="..\:/Courses Android dev/Currency Converter/app/src/main/res/drawable/swap_currency_bg.xml" value="0.1725" />
         <entry key="..\:/Courses Android dev/Currency Converter/app/src/main/res/layout/activity_main.xml" value="0.25416666666666665" />
@@ -20,6 +22,7 @@
         <entry key="..\:/Courses Android dev/Currency Converter/app/src/main/res/layout/fragment_cryptocurrency.xml" value="0.25416666666666665" />
         <entry key="..\:/Courses Android dev/Currency Converter/app/src/main/res/layout/fragment_currency_list.xml" value="0.264" />
         <entry key="..\:/Courses Android dev/Currency Converter/app/src/main/res/layout/fragment_stockmarket.xml" value="0.25416666666666665" />
+        <entry key="..\:/Courses Android dev/Currency Converter/app/src/main/res/menu/list_menu.xml" value="0.25416666666666665" />
         <entry key="..\:/Courses Android dev/Currency Converter/app/src/main/res/menu/menu_currency_list.xml" value="0.25416666666666665" />
         <entry key="..\:/Courses Android dev/Currency Converter/app/src/main/res/menu/navigation_drawer_menu.xml" value="0.25416666666666665" />
       </map>

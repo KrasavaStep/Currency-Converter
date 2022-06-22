@@ -44,6 +44,12 @@ class CurrencyListViewModel(private val repository: Repository) : ViewModel() {
     private val _secondCurrencyName = MutableLiveData<DataEvent<String>>()
     val secondCurrencyName: LiveData<DataEvent<String>> = _secondCurrencyName
 
+    private val _isConnect = MutableLiveData<Boolean>()
+    val isConnect: LiveData<Boolean> = _isConnect
+
+    private val _isFirstStart = MutableLiveData<DataEvent<Boolean>>()
+    val isFirstStart: LiveData<DataEvent<Boolean>> = _isFirstStart
+
     fun getAllCurrencies() {
         _currencies.postValue(ResultState.Loading())
         repository.getAllCurrency(object : Callback<CurrencyApiResponse> {
@@ -81,11 +87,11 @@ class CurrencyListViewModel(private val repository: Repository) : ViewModel() {
         }
     }
 
-    fun getDataForSearch(search: String) : LiveData<List<CurrencyItem>>{
+    fun getCurrencyForSearch(search: String) : LiveData<List<CurrencyItem>>{
         return if (search.isBlank()){
             repository.allCurrencyFromDb
         } else {
-            repository.getDataForSearch("%$search%")
+            repository.getCurrencyForSearch("%$search%")
         }
     }
 
@@ -205,8 +211,10 @@ class CurrencyListViewModel(private val repository: Repository) : ViewModel() {
         for ((i, cur) in data.keys.withIndex()) {
             if (i == 0) {
                 cur1 = cur
+                _firstCurrencyName.postValue(DataEvent(cur1.name))
             } else {
                 cur2 = cur
+                _secondCurrencyName.postValue(DataEvent(cur2.name))
             }
         }
         return convertCurrencies(
@@ -260,5 +268,12 @@ class CurrencyListViewModel(private val repository: Repository) : ViewModel() {
         }
     }
 
+    fun checkConnection(isConnected: Boolean){
+        _isConnect.value=isConnected
+    }
+
+    fun checkFirstStart(firstStart: Boolean){
+        _isFirstStart.value = DataEvent(firstStart)
+    }
 
 }

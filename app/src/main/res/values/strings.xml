@@ -13,4 +13,6 @@
     <string name="day_chart">Chart for day</string>
     <string name="year_chart">Chart for year</string>
     <string name="chart_desc">Prices of cryptocurrency</string>
+
+    <string name="dialog_text">When you first launch the application, it is recommended to turn on the Internet connection</string>
 </resources>

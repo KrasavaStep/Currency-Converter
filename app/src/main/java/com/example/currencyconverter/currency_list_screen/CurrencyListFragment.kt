@@ -7,15 +7,15 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
+import android.widget.SearchView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentResultListener
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.currencyconverter.*
-import com.example.currencyconverter.currency_list_screen.dialog_fragment.ChooseCurrencyDialogFragment
+import com.example.currencyconverter.currency_list_screen.dialog_fragment.InternetAttentionDialogFragment
 import com.example.currencyconverter.data.db.entities.CurrencyItem
 import com.example.currencyconverter.databinding.FragmentCurrencyListBinding
-import com.google.android.material.snackbar.Snackbar
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.qualifier.named
 
@@ -32,6 +32,8 @@ class CurrencyListFragment : Fragment(R.layout.fragment_currency_list) {
     private var _binding: FragmentCurrencyListBinding? = null
     private val binding
         get() = _binding!!
+
+    private var con: NetworkConnection? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,9 +59,26 @@ class CurrencyListFragment : Fragment(R.layout.fragment_currency_list) {
         binding.currencyListRv.adapter = adapter
         binding.currencyListRv.layoutManager = LinearLayoutManager(requireContext())
 
+        viewModel.checkFirstStart(MainActivity.isFirstRun)
+        viewModel.isFirstStart.observe(viewLifecycleOwner) {
+            it.getContentIfNotHandled()?.let { result ->
+                if (result) {
+                    setupInternetAttentionDialog()
+                    showInternetAttentionDialog()
+                }
+            }
+        }
+
+
+
+
         binding.currencyFirstCostTxt.afterTextChangedDebounce(TEXT_CHANGED_DELAY) { currencyValue ->
             if (currencyValue.isNotBlank()) {
                 currencyValue1 = currencyValue.toFloat()
+                executionOrder = ORDER_POSITION_FIRST
+                setCurrencyValues()
+            } else {
+                currencyValue1 = 0f
                 executionOrder = ORDER_POSITION_FIRST
                 setCurrencyValues()
             }
@@ -70,24 +89,39 @@ class CurrencyListFragment : Fragment(R.layout.fragment_currency_list) {
                 currencyValue2 = currencyValue.toFloat()
                 executionOrder = ORDER_POSITION_SECOND
                 setCurrencyValues()
+            } else {
+                currencyValue2 = 0f
+                executionOrder = ORDER_POSITION_FIRST
+                setCurrencyValues()
             }
         }
 
-        binding.searchCurrency.afterTextChangedDebounce(TEXT_CHANGED_DELAY) { currencyName ->
-            viewModel.getDataForSearch(currencyName).observe(viewLifecycleOwner) { list ->
-                binding.currencyListRv.visibility = View.GONE
-                if (list.isEmpty()) {
-                    binding.errorImage.setImageResource(R.drawable.ic_baseline_search_24)
-                    binding.warningTextView.text = "No currencies found"
-                    binding.errorLayout.visibility = View.VISIBLE
-                    return@observe
-                } else {
-                    binding.errorLayout.visibility = View.GONE
-                    binding.currencyListRv.visibility = View.VISIBLE
-                }
-                adapter.setData(list)
+        binding.searchCurrency.clearFocus()
+        binding.searchCurrency.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return false
             }
-        }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                if (!newText.isNullOrEmpty()) {
+                    viewModel.getCurrencyForSearch(newText).observe(viewLifecycleOwner) { list ->
+                        binding.currencyListRv.visibility = View.GONE
+                        if (list.isEmpty()) {
+                            binding.errorImage.setImageResource(R.drawable.ic_baseline_search_24)
+                            binding.warningTextView.text = "No currencies found"
+                            binding.errorLayout.visibility = View.VISIBLE
+                            return@observe
+                        } else {
+                            binding.errorLayout.visibility = View.GONE
+                            binding.currencyListRv.visibility = View.VISIBLE
+                        }
+                        adapter.setData(list)
+                    }
+                }
+               return true
+            }
+
+        })
 
         binding.swapBtn.setOnClickListener {
             val tempCode = currencyCode1
@@ -97,42 +131,23 @@ class CurrencyListFragment : Fragment(R.layout.fragment_currency_list) {
             setCurrencyValues()
         }
 
-        binding.currencyFirstTxt.setOnClickListener {
-            showChooseCurrencyDialog()
-        }
-
-        binding.currencySecondCostTxt.setOnClickListener {
-
-        }
-
-        MainActivity().networkConnection?.observe(viewLifecycleOwner){
-            if (it){
-                Toast.makeText(requireContext(), "ds", Toast.LENGTH_SHORT).show()
-            }
-        }
-
-        //TODO connection callback problem
-//        val conn = NetworkConnection(requireContext())
-//        conn.observe(viewLifecycleOwner) {
-//            if (it) {
-//                viewModel.getExchangeRates()
-//                viewModel.getAllCurrencies()
-//            }
-//        }
-
         viewModel.currencies.observe(viewLifecycleOwner) {
             when (it) {
                 is ResultState.Error -> {
                     binding.currencyListProgressBar.visibility = View.GONE
-                    binding.errorLayout.visibility = View.VISIBLE
-
+                    //binding.errorLayout.visibility = View.VISIBLE
+                    binding.currencyListRv.visibility = View.VISIBLE
+                    it.exception.message?.let { it1 -> Log.d("MyApp", it1) }
                 }
                 is ResultState.Success -> {
                     binding.currencyListProgressBar.visibility = View.GONE
                     binding.errorLayout.visibility = View.GONE
+                    binding.currencyListRv.visibility = View.VISIBLE
                 }
                 is ResultState.Loading -> {
                     binding.currencyListProgressBar.visibility = View.VISIBLE
+                    binding.currencyListRv.visibility = View.GONE
+                    binding.errorLayout.visibility = View.GONE
                 }
             }
         }
@@ -141,21 +156,28 @@ class CurrencyListFragment : Fragment(R.layout.fragment_currency_list) {
             when (it) {
                 is ResultState.Error -> {
                     binding.currencyListProgressBar.visibility = View.GONE
-                    binding.errorLayout.visibility = View.VISIBLE
+                    //binding.errorLayout.visibility = View.VISIBLE
+                    binding.currencyListRv.visibility = View.VISIBLE
                     it.exception.message?.let { it1 -> Log.d("MyApp", it1) }
                 }
                 is ResultState.Success -> {
                     binding.currencyListProgressBar.visibility = View.GONE
                     binding.errorLayout.visibility = View.GONE
+                    binding.currencyListRv.visibility = View.VISIBLE
+                    Log.d("MyApp", "success")
                 }
                 is ResultState.Loading -> {
                     binding.currencyListProgressBar.visibility = View.VISIBLE
+                    binding.currencyListRv.visibility = View.GONE
+                    binding.errorLayout.visibility = View.GONE
+                    Log.d("MyApp", "loading")
                 }
             }
         }
 
+        viewModel.getExchangeRates()
+        viewModel.getAllCurrencies()
         setCurrencyValues()
-        setupChooseCurrencyDialog()
     }
 
 
@@ -176,7 +198,6 @@ class CurrencyListFragment : Fragment(R.layout.fragment_currency_list) {
 
                 binding.currencyFirstCostTxt.setText(currencyValue1.toString())
                 binding.currencySecondCostTxt.setText(currencyValue2.toString())
-
             }
         }
 
@@ -194,19 +215,17 @@ class CurrencyListFragment : Fragment(R.layout.fragment_currency_list) {
         getCurrenciesFromDb(!IS_FAVOURITE)
     }
 
-    //TODO
-    private fun showChooseCurrencyDialog() {
-        val dialogFragment = ChooseCurrencyDialogFragment()
-        dialogFragment.show(parentFragmentManager, ChooseCurrencyDialogFragment.TAG)
+    private fun showInternetAttentionDialog() {
+        val dialogFragment = InternetAttentionDialogFragment()
+        dialogFragment.show(parentFragmentManager, InternetAttentionDialogFragment.TAG)
     }
 
-    //TODO
-    private fun setupChooseCurrencyDialog() {
+    private fun setupInternetAttentionDialog() {
         parentFragmentManager.setFragmentResultListener(
-            ChooseCurrencyDialogFragment.REQUEST_KEY,
+            InternetAttentionDialogFragment.REQUEST_KEY,
             viewLifecycleOwner,
             FragmentResultListener { _, result ->
-                when (result.getInt(ChooseCurrencyDialogFragment.KEY_RESPONSE)) {
+                when (result.getInt(InternetAttentionDialogFragment.KEY_RESPONSE)) {
                     DialogInterface.BUTTON_NEGATIVE -> Toast.makeText(
                         requireContext(),
                         "dd",
@@ -231,6 +250,11 @@ class CurrencyListFragment : Fragment(R.layout.fragment_currency_list) {
                 getCurrenciesFromDb(IS_FAVOURITE)
                 return true
             }
+            R.id.refresh_list -> {
+                viewModel.getExchangeRates()
+                viewModel.getAllCurrencies()
+                return true
+            }
         }
         return super.onOptionsItemSelected(item)
     }
@@ -253,10 +277,7 @@ class CurrencyListFragment : Fragment(R.layout.fragment_currency_list) {
         private const val ORDER_POSITION_FIRST = 1
         private const val ORDER_POSITION_SECOND = 2
         private const val TEXT_CHANGED_DELAY = 1000L
-        private const val CHOOSE_DIALOG_TAG = "choose dialog"
         private const val START_CURRENCY_VALUE = 1f
-        private const val OFFLINE_VAL = "Offline"
-        private const val ONLINE_VAL = "Online"
         private const val USD_CODE = "USD"
         private const val RUB_CODE = "RUB"
         private const val IS_FAVOURITE = true

@@ -32,7 +32,7 @@ interface CurrencyDao {
     suspend fun getCurrencyByCode(code: String) : CurrencyItem?
 
     @Query("SELECT * FROM currency_table WHERE name LIKE :name ORDER BY name")
-    fun getDataForSearch(name: String) : LiveData<List<CurrencyItem>>
+    fun getCurrencyForSearch(name: String) : LiveData<List<CurrencyItem>>
 
     @Update
     suspend fun updateCurrencyItem(currencyItem: CurrencyItem)
@@ -45,4 +45,6 @@ interface CurrencyDao {
     @Query("SELECT * FROM cryptocurrency_data")
     fun getAllCryptos(): LiveData<List<CryptocurrencyItem>>
 
+    @Query("SELECT * FROM cryptocurrency_data WHERE id LIKE :name ORDER BY name OR name LIKE :name")
+    fun getCryptoForSearch(name: String) : LiveData<List<CryptocurrencyItem>>
 }

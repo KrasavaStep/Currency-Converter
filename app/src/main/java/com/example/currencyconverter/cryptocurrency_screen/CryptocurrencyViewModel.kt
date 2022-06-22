@@ -9,6 +9,7 @@ import com.example.currencyconverter.DataEvent
 import com.example.currencyconverter.data.Repository
 import com.example.currencyconverter.data.cryptocurrency_api.models.CryptoDataResponse
 import com.example.currencyconverter.data.db.entities.CryptocurrencyItem
+import com.example.currencyconverter.data.db.entities.CurrencyItem
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
@@ -51,6 +52,14 @@ class CryptocurrencyViewModel(private val repository: Repository) : ViewModel() 
             _result.postValue(DataEvent(true))
         } catch (ex: Exception) {
             _result.postValue(DataEvent(false))
+        }
+    }
+
+    fun getCryptoForSearch(search: String) : LiveData<List<CryptocurrencyItem>>{
+        return if (search.isBlank()){
+            repository.allCryptos
+        } else {
+            repository.getCryptoForSearch("%$search%")
         }
     }
 }

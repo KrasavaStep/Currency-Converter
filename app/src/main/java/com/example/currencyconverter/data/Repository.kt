@@ -24,7 +24,8 @@ class Repository(private val currencyApi: CurrencyApi, private val currencyDao: 
         currencyApi.getLatestExchangeRates().enqueue(callback)
     }
 
-    fun getDataForSearch(name: String) = currencyDao.getDataForSearch(name)
+    fun getCurrencyForSearch(name: String) = currencyDao.getCurrencyForSearch(name)
+
 
     suspend fun setDataToCurrencyTable(currencies: List<CurrencyItem>) {
         currencies.forEach {
@@ -81,4 +82,6 @@ class Repository(private val currencyApi: CurrencyApi, private val currencyDao: 
 
     suspend fun getOHLCForDay(id: String) = cryptoApi.getCryptoOHLCForDay(id)
     suspend fun getOHLCForYear(id: String) = cryptoApi.getCryptoOHLCForYear(id)
+
+    fun getCryptoForSearch(name: String) = currencyDao.getCryptoForSearch(name)
 }

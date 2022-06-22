@@ -87,4 +87,7 @@ dependencies {
 
     //charts
     implementation 'com.github.PhilJay:MPAndroidChart:v2.2.4'
+
+    //preferences
+    implementation 'androidx.datastore:datastore-preferences:1.0.0'
 }

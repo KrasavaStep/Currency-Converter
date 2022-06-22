@@ -1,6 +1,7 @@
 package com.example.currencyconverter.di
 
 import com.example.currencyconverter.BuildConfig
+import com.example.currencyconverter.NetworkConnection
 import com.example.currencyconverter.data.cryptocurrency_api.CryptocurrencyApi
 import com.example.currencyconverter.data.currency_api.CurrencyApi
 import okhttp3.OkHttpClient

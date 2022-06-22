@@ -2,9 +2,8 @@ package com.example.currencyconverter.cryptocurrency_screen
 
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
+import android.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -52,6 +51,7 @@ class CryptocurrencyFragment : Fragment(R.layout.fragment_cryptocurrency) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setHasOptionsMenu(true)
         _binding = FragmentCryptocurrencyBinding.bind(view)
         viewModel.getCryptoList()
 
@@ -59,8 +59,58 @@ class CryptocurrencyFragment : Fragment(R.layout.fragment_cryptocurrency) {
         binding.cryptoRv.layoutManager = LinearLayoutManager(requireContext())
 
         viewModel.allCryptos.observe(viewLifecycleOwner) {
-            Log.d("MyApp", it.size.toString())
             adapter.setData(it)
         }
+
+        binding.searchCurrency.clearFocus()
+        binding.searchCurrency.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                if (!newText.isNullOrEmpty()) {
+                    viewModel.getCryptoForSearch(newText).observe(viewLifecycleOwner) { list ->
+                        binding.cryptoRv.visibility = View.GONE
+                        if (list.isEmpty()) {
+                            binding.errorImage.setImageResource(R.drawable.ic_baseline_search_24)
+                            binding.warningTextView.text = "No currencies found"
+                            binding.errorLayout.visibility = View.VISIBLE
+                            return@observe
+                        } else {
+                            binding.errorLayout.visibility = View.GONE
+                            binding.cryptoRv.visibility = View.VISIBLE
+                        }
+                        adapter.setData(list)
+                    }
+                }
+                else {
+                    viewModel.allCryptos.observe(viewLifecycleOwner) {
+                        adapter.setData(it)
+                    }
+                }
+                return true
+            }
+
+        })
+    }
+
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.crypto_list_menu, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.refresh_list -> {
+                viewModel.getCryptoList()
+                viewModel.allCryptos.observe(viewLifecycleOwner) {
+                    adapter.setData(it)
+                }
+                return true
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 }
