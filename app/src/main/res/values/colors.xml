@@ -15,4 +15,6 @@
 
     <color name="low_percent_color">#FD0000</color>
     <color name="high_percent_color">#219C05</color>
+
+    <color name="red">#FF0000</color>
 </resources>

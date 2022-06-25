@@ -13,6 +13,13 @@
     <string name="day_chart">Chart for day</string>
     <string name="year_chart">Chart for year</string>
     <string name="chart_desc">Prices of cryptocurrency</string>
-
     <string name="dialog_text">When you first launch the application, it is recommended to turn on the Internet connection</string>
+    <string name="decimal_number">Decimal number</string>
+    <string name="theme">Theme</string>
+    <string name="digits_dialog">Choose number og decimal digits.</string>
+    <string name="digits_number2">2 decimal digits</string>
+    <string name="digits_number3">3 decimal digits</string>
+    <string name="digits_number4">4 decimal digits</string>
+    <string name="submit">Submit</string>
+    <string name="cancel">Cancel</string>
 </resources>

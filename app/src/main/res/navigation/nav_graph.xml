@@ -11,6 +11,9 @@
         <action
             android:id="@+id/action_currencyListFragment_to_cryptocurrencyFragment"
             app:destination="@id/cryptocurrencyFragment" />
+        <action
+            android:id="@+id/action_currencyListFragment_to_settingsFragment"
+            app:destination="@id/settingsFragment" />
     </fragment>
     <fragment
         android:id="@+id/cryptocurrencyFragment"
@@ -36,5 +39,13 @@
         <argument
             android:name="marketCap"
             app:argType="long" />
+    </fragment>
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.example.currencyconverter.settings_screen.SettingsFragment"
+        android:label="SettingsFragment" >
+        <action
+            android:id="@+id/action_settingsFragment_to_currencyListFragment"
+            app:destination="@id/currencyListFragment" />
     </fragment>
 </navigation>

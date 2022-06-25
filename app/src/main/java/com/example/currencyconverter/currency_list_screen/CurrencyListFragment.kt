@@ -1,6 +1,7 @@
 package com.example.currencyconverter.currency_list_screen
 
-import android.content.DialogInterface
+import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
@@ -8,12 +9,9 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.widget.SearchView
-import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentResultListener
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.currencyconverter.*
-import com.example.currencyconverter.currency_list_screen.dialog_fragment.InternetAttentionDialogFragment
 import com.example.currencyconverter.data.db.entities.CurrencyItem
 import com.example.currencyconverter.databinding.FragmentCurrencyListBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -28,12 +26,14 @@ class CurrencyListFragment : Fragment(R.layout.fragment_currency_list) {
     private var currencyValue1 = START_CURRENCY_VALUE
     private var currencyValue2 = START_CURRENCY_VALUE
     private var executionOrder = ORDER_POSITION_FIRST
+    private var countOfDecimalDigits = COUNT_OF_DECIMAL_DIGITS
 
     private var _binding: FragmentCurrencyListBinding? = null
     private val binding
         get() = _binding!!
 
-    private var con: NetworkConnection? = null
+    private var prefsDecimal: SharedPreferences? = null
+    private var prefsExchange: SharedPreferences? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -59,22 +59,37 @@ class CurrencyListFragment : Fragment(R.layout.fragment_currency_list) {
         binding.currencyListRv.adapter = adapter
         binding.currencyListRv.layoutManager = LinearLayoutManager(requireContext())
 
-        viewModel.checkFirstStart(MainActivity.isFirstRun)
-        viewModel.isFirstStart.observe(viewLifecycleOwner) {
-            it.getContentIfNotHandled()?.let { result ->
-                if (result) {
-                    setupInternetAttentionDialog()
-                    showInternetAttentionDialog()
-                }
+        prefsDecimal = activity?.getSharedPreferences(MainActivity.PREF_NAME, Context.MODE_PRIVATE)
+        prefsDecimal?.let {
+            countOfDecimalDigits = it.getInt(
+                MainActivity.DECIMAL_DIGITS_KEY,
+                MainActivity.DEF_VALUE
+            )
+        }
+
+        prefsExchange = activity?.getSharedPreferences(PREF_EX_NAME, Context.MODE_PRIVATE)
+        prefsExchange?.let { value ->
+            currencyValue2 = value.getFloat(PREF_VAL2, START_CURRENCY_VALUE)
+        }
+        prefsExchange?.let { value ->
+            currencyValue1 = value.getFloat(PREF_VAL1, START_CURRENCY_VALUE)
+        }
+
+        val networkConnection = NetworkConnection(requireContext())
+        networkConnection.observe(viewLifecycleOwner) {
+            if (it) {
+                viewModel.getExchangeRates()
+                viewModel.getAllCurrencies()
+                getCurrenciesFromDb(!IS_FAVOURITE)
+            } else {
+                getCurrenciesFromDb(!IS_FAVOURITE)
             }
         }
 
-
-
-
         binding.currencyFirstCostTxt.afterTextChangedDebounce(TEXT_CHANGED_DELAY) { currencyValue ->
             if (currencyValue.isNotBlank()) {
-                currencyValue1 = currencyValue.toFloat()
+                val value = currencyValue.replace(',', '.')
+                currencyValue1 = value.toFloat()
                 executionOrder = ORDER_POSITION_FIRST
                 setCurrencyValues()
             } else {
@@ -86,7 +101,8 @@ class CurrencyListFragment : Fragment(R.layout.fragment_currency_list) {
 
         binding.currencySecondCostTxt.afterTextChangedDebounce(TEXT_CHANGED_DELAY) { currencyValue ->
             if (currencyValue.isNotBlank()) {
-                currencyValue2 = currencyValue.toFloat()
+                val value = currencyValue.replace(',', '.')
+                currencyValue2 = value.toFloat()
                 executionOrder = ORDER_POSITION_SECOND
                 setCurrencyValues()
             } else {
@@ -97,7 +113,7 @@ class CurrencyListFragment : Fragment(R.layout.fragment_currency_list) {
         }
 
         binding.searchCurrency.clearFocus()
-        binding.searchCurrency.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
+        binding.searchCurrency.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 return false
             }
@@ -118,7 +134,7 @@ class CurrencyListFragment : Fragment(R.layout.fragment_currency_list) {
                         adapter.setData(list)
                     }
                 }
-               return true
+                return true
             }
 
         })
@@ -175,9 +191,7 @@ class CurrencyListFragment : Fragment(R.layout.fragment_currency_list) {
             }
         }
 
-        viewModel.getExchangeRates()
-        viewModel.getAllCurrencies()
-        setCurrencyValues()
+
     }
 
 
@@ -193,11 +207,26 @@ class CurrencyListFragment : Fragment(R.layout.fragment_currency_list) {
                         currencyValue2
                     )
 
-                if (executionOrder == ORDER_POSITION_FIRST) currencyValue2 = result
-                else if (executionOrder == ORDER_POSITION_SECOND) currencyValue1 = result
+                if (executionOrder == ORDER_POSITION_FIRST) {
+                    currencyValue2 = result
+                    prefsExchange?.edit()?.putFloat(PREF_VAL2, currencyValue2)?.apply()
+                } else if (executionOrder == ORDER_POSITION_SECOND) {
+                    currencyValue1 = result
+                    prefsExchange?.edit()?.putFloat(PREF_VAL1, currencyValue1)?.apply()
+                }
 
-                binding.currencyFirstCostTxt.setText(currencyValue1.toString())
-                binding.currencySecondCostTxt.setText(currencyValue2.toString())
+                binding.currencyFirstCostTxt.setText(
+                    String.format(
+                        "%.${countOfDecimalDigits}f",
+                        currencyValue1
+                    )
+                )
+                binding.currencySecondCostTxt.setText(
+                    String.format(
+                        "%.${countOfDecimalDigits}f",
+                        currencyValue2
+                    )
+                )
             }
         }
 
@@ -211,28 +240,6 @@ class CurrencyListFragment : Fragment(R.layout.fragment_currency_list) {
                 binding.currencySecondTxt.text = name
             }
         }
-
-        getCurrenciesFromDb(!IS_FAVOURITE)
-    }
-
-    private fun showInternetAttentionDialog() {
-        val dialogFragment = InternetAttentionDialogFragment()
-        dialogFragment.show(parentFragmentManager, InternetAttentionDialogFragment.TAG)
-    }
-
-    private fun setupInternetAttentionDialog() {
-        parentFragmentManager.setFragmentResultListener(
-            InternetAttentionDialogFragment.REQUEST_KEY,
-            viewLifecycleOwner,
-            FragmentResultListener { _, result ->
-                when (result.getInt(InternetAttentionDialogFragment.KEY_RESPONSE)) {
-                    DialogInterface.BUTTON_NEGATIVE -> Toast.makeText(
-                        requireContext(),
-                        "dd",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
-            })
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -270,6 +277,7 @@ class CurrencyListFragment : Fragment(R.layout.fragment_currency_list) {
                 binding.errorLayout.visibility = View.GONE
             }
             adapter.setData(it)
+            setCurrencyValues()
         }
     }
 
@@ -281,6 +289,10 @@ class CurrencyListFragment : Fragment(R.layout.fragment_currency_list) {
         private const val USD_CODE = "USD"
         private const val RUB_CODE = "RUB"
         private const val IS_FAVOURITE = true
+        private const val COUNT_OF_DECIMAL_DIGITS = 3
+        private const val PREF_EX_NAME = "exchange_values"
+        private const val PREF_VAL1 = "value_ex1"
+        private const val PREF_VAL2 = "value_ex2"
     }
 
 }
