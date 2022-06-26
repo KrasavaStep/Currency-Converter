@@ -23,10 +23,6 @@ class CryptoGraphicFragment : Fragment(R.layout.fragment_crypto_graphic) {
     private val binding
         get() = _binding!!
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -50,7 +46,7 @@ class CryptoGraphicFragment : Fragment(R.layout.fragment_crypto_graphic) {
                 }
                 is ResultState.Error -> {
                     binding.progress.visibility = View.GONE
-                    Log.d("MyApp", it.exception.message.toString())
+                    Log.d(TAG, it.exception.message.toString())
                 }
             }
         }
@@ -66,7 +62,7 @@ class CryptoGraphicFragment : Fragment(R.layout.fragment_crypto_graphic) {
                 }
                 is ResultState.Error -> {
                     binding.progress2.visibility = View.GONE
-                    Log.d("MyApp", it.exception.message.toString())
+                    Log.d(TAG, it.exception.message.toString())
                 }
             }
         }
@@ -98,6 +94,7 @@ class CryptoGraphicFragment : Fragment(R.layout.fragment_crypto_graphic) {
         private const val DURATION_MILLIS_Y = 2000
         private const val SCALE_X = 2f
         private const val SCALE_Y = 0f
+        private const val TAG = "CurrencyAppEx"
 
     }
 }

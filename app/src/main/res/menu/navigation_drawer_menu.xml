@@ -3,12 +3,12 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/currencyListFragment"
-            android:title="Currency converter" />
+            android:title="@string/app_name" />
         <item
             android:id="@+id/cryptocurrencyFragment"
-            android:title="Cryptocurrency" />
+            android:title="@string/crypto_title" />
         <item
             android:id="@+id/settingsFragment"
-            android:title="Settings" />
+            android:title="@string/setting_title" />
     </group>
 </menu>

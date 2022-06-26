@@ -124,7 +124,7 @@ class CurrencyListFragment : Fragment(R.layout.fragment_currency_list) {
                         binding.currencyListRv.visibility = View.GONE
                         if (list.isEmpty()) {
                             binding.errorImage.setImageResource(R.drawable.ic_baseline_search_24)
-                            binding.warningTextView.text = "No currencies found"
+                            binding.warningTextView.text = getString(R.string.no_cur_found)
                             binding.errorLayout.visibility = View.VISIBLE
                             return@observe
                         } else {
@@ -151,19 +151,20 @@ class CurrencyListFragment : Fragment(R.layout.fragment_currency_list) {
             when (it) {
                 is ResultState.Error -> {
                     binding.currencyListProgressBar.visibility = View.GONE
-                    //binding.errorLayout.visibility = View.VISIBLE
                     binding.currencyListRv.visibility = View.VISIBLE
-                    it.exception.message?.let { it1 -> Log.d("MyApp", it1) }
+                    it.exception.message?.let { it1 -> Log.d(TAG, it1) }
                 }
                 is ResultState.Success -> {
                     binding.currencyListProgressBar.visibility = View.GONE
                     binding.errorLayout.visibility = View.GONE
                     binding.currencyListRv.visibility = View.VISIBLE
+                    Log.d(TAG, SUCCESS)
                 }
                 is ResultState.Loading -> {
                     binding.currencyListProgressBar.visibility = View.VISIBLE
                     binding.currencyListRv.visibility = View.GONE
                     binding.errorLayout.visibility = View.GONE
+                    Log.d(TAG, LOADING)
                 }
             }
         }
@@ -172,21 +173,20 @@ class CurrencyListFragment : Fragment(R.layout.fragment_currency_list) {
             when (it) {
                 is ResultState.Error -> {
                     binding.currencyListProgressBar.visibility = View.GONE
-                    //binding.errorLayout.visibility = View.VISIBLE
                     binding.currencyListRv.visibility = View.VISIBLE
-                    it.exception.message?.let { it1 -> Log.d("MyApp", it1) }
+                    it.exception.message?.let { it1 -> Log.d(TAG, it1) }
                 }
                 is ResultState.Success -> {
                     binding.currencyListProgressBar.visibility = View.GONE
                     binding.errorLayout.visibility = View.GONE
                     binding.currencyListRv.visibility = View.VISIBLE
-                    Log.d("MyApp", "success")
+                    Log.d(TAG, SUCCESS)
                 }
                 is ResultState.Loading -> {
                     binding.currencyListProgressBar.visibility = View.VISIBLE
                     binding.currencyListRv.visibility = View.GONE
                     binding.errorLayout.visibility = View.GONE
-                    Log.d("MyApp", "loading")
+                    Log.d(TAG, LOADING)
                 }
             }
         }
@@ -227,6 +227,20 @@ class CurrencyListFragment : Fragment(R.layout.fragment_currency_list) {
                         currencyValue2
                     )
                 )
+            }
+        }
+
+        viewModel.errorResult.observe(viewLifecycleOwner){
+            it.getContentIfNotHandled()?.let { res ->
+                if (res.isNotEmpty()){
+                    binding.currencyListRv.visibility = View.GONE
+                    binding.errorLayout.visibility = View.VISIBLE
+                    binding.warningTextView.text = res
+                }
+                else {
+                    binding.currencyListRv.visibility = View.VISIBLE
+                    binding.errorLayout.visibility = View.GONE
+                }
             }
         }
 
@@ -293,6 +307,9 @@ class CurrencyListFragment : Fragment(R.layout.fragment_currency_list) {
         private const val PREF_EX_NAME = "exchange_values"
         private const val PREF_VAL1 = "value_ex1"
         private const val PREF_VAL2 = "value_ex2"
+        private const val TAG = "curListMsg"
+        private const val SUCCESS = "success"
+        private const val LOADING = "loading"
     }
 
 }

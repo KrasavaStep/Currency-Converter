@@ -1,10 +1,12 @@
 package com.example.currencyconverter.crypto_graphic_screen
 
+import android.content.res.Resources
 import android.graphics.Color
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.*
 import com.example.currencyconverter.DataEvent
+import com.example.currencyconverter.R
 import com.example.currencyconverter.ResultState
 import com.example.currencyconverter.data.Repository
 import com.github.mikephil.charting.data.Entry
@@ -71,11 +73,12 @@ class CryptoGraphicViewModel(private val repository: Repository) : ViewModel() {
 
         val timeList: ArrayList<String> = timeListDef.await()
         val priceList: ArrayList<Entry> = priceListDef.await()
-        val lineDataSet = LineDataSet(priceList, "prices")
-        lineDataSet.color = Color.rgb(246, 66, 165)
+        val lineDataSet =
+            LineDataSet(priceList, Resources.getSystem().getString(R.string.chart_desc))
+        lineDataSet.color = Color.rgb(45, 120, 179)
         lineDataSet.circleRadius = 0f
         lineDataSet.setDrawFilled(true)
-        lineDataSet.fillColor = Color.rgb(246, 66, 165)
+        lineDataSet.fillColor = Color.rgb(77, 176, 255)
         lineDataSet.fillAlpha = 30
         val lineData = LineData(timeList, lineDataSet)
         _dayOHLCData.postValue(DataEvent(lineData))
@@ -101,11 +104,12 @@ class CryptoGraphicViewModel(private val repository: Repository) : ViewModel() {
         val timeList: ArrayList<String> = timeListDef.await()
         val priceList: ArrayList<Entry> = priceListDef.await()
 
-        val lineDataSet = LineDataSet(priceList, "prices")
-        lineDataSet.color = Color.rgb(246, 66, 165)
+        val lineDataSet =
+            LineDataSet(priceList, Resources.getSystem().getString(R.string.chart_desc))
+        lineDataSet.color = Color.rgb(45, 120, 179)
         lineDataSet.circleRadius = 0f
         lineDataSet.setDrawFilled(true)
-        lineDataSet.fillColor = Color.rgb(246, 66, 165)
+        lineDataSet.fillColor = Color.rgb(77, 176, 255)
         lineDataSet.fillAlpha = 30
         val lineData = LineData(timeList, lineDataSet)
         _yearOHLCData.postValue(DataEvent(lineData))

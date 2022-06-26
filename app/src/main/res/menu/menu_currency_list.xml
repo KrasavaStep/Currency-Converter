@@ -3,14 +3,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/simple_view"
-        android:title="Regular" />
+        android:title="@string/sort_regular" />
     <item
         android:id="@+id/favourite_view"
-        android:title="Favourites" />
+        android:title="@string/sort_favourites" />
 
     <item
         android:id="@+id/refresh_list"
-        android:title="Refresh"
+        android:title="@string/refresh"
         android:icon="@drawable/ic_baseline_refresh_24"
         app:showAsAction="always"
         />

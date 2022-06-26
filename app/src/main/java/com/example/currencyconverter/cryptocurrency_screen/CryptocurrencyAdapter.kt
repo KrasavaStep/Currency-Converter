@@ -55,22 +55,10 @@ class CryptocurrencyAdapter(
             var x = item.priceChangePercentage1hInCurrency * 100
             var result = x.roundToInt() / 1000.0
             percent1h.text = String.format(text, result.toString())
-            val highPercent = holder.itemView.resources.getColor(R.color.high_percent_color)
-            val lowPercent = holder.itemView.resources.getColor(R.color.low_percent_color)
-            if (result >= 0.0) {
-                percent1h.setTextColor(highPercent)
-            } else {
-                percent1h.setTextColor(lowPercent)
-            }
             text = holder.itemView.context.getString(R.string.crypto_per_24h)
 
             x = item.priceChangePercentage24h * 100
             result = x.roundToInt() / 1000.0
-            if (result >= 0.0) {
-                percent1h.setTextColor(highPercent)
-            } else {
-                percent1h.setTextColor(lowPercent)
-            }
             percent24h.text = String.format(text, result.toString())
         }
     }

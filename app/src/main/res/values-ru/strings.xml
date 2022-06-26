@@ -1,0 +1,42 @@
+<resources>
+    <string name="app_name">Конвертер валют</string>
+
+    <string name="swap_currency_btn_desc">Поменять валюты местами</string>
+
+    <string name="error_text">Что-то пошло не так</string>
+    <string name="error_text2">Тело ответа пустое</string>
+    <string name="currency_code">%1$s / %2$s</string>
+    <string name="crypto_price">%1$s$</string>
+    <string name="crypto_per_1h">1h:%1$s</string>
+    <string name="crypto_per_24h">24h:%1$s</string>
+    <string name="market_cap">Рыночная капитализация %1$s$</string>
+    <string name="day_chart">График на день</string>
+    <string name="year_chart">График на год</string>
+    <string name="chart_desc">Цены криптовалют</string>
+    <string name="dialog_text">При первом запуске приложения рекомендуется включить интернет соединение</string>
+    <string name="decimal_number">Числа после запятой</string>
+    <string name="theme">Тема</string>
+    <string name="digits_dialog">Выберите количесвто чисел после запятой</string>
+    <string name="digits_number2">2 числа</string>
+    <string name="digits_number3">3 числа</string>
+    <string name="digits_number4">4 числа</string>
+    <string name="submit">Принять</string>
+    <string name="cancel">Отмена</string>
+    <string name="theme_mode">Светлая тема</string>
+
+    <string name="setting_title">Настройки</string>
+    <string name="currency_list_title">Список валют</string>
+    <string name="crypto_title">Криптовалюта</string>
+    <string name="crypto_chart">Графики</string>
+
+    <string name="offline">Офлайн</string>
+    <string name="Online">Онлайн</string>
+    <string name="hello_msg">Добро пожаловать! :)</string>
+
+    <string name="no_cur_found">Валют не найдено</string>
+    <string name="crypto_img_desc">иконка</string>
+
+    <string name="refresh">Перезагрузка</string>
+    <string name="sort_regular">Обычный список</string>
+    <string name="sort_favourites">Любимые</string>
+</resources>

@@ -7,14 +7,21 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
     <color name="bg_color">#EEFFFE</color>
     <color name="main_color">#0BE362</color>
     <color name="list_item_bg_color">#A7E8D3</color>
     <color name="currency_cost_bg_color">#3FDAD5</color>
     <color name="currency_swap_block_bg">#DFF2F2</color>
 
-    <color name="low_percent_color">#FD0000</color>
-    <color name="high_percent_color">#219C05</color>
+    <color name="cancel_btn_bg">#C55555</color>
+    <color name="submit_btn_bg">#4B8735</color>
 
-    <color name="red">#FF0000</color>
+    <color name="crypto_bg_line">#000000</color>
+    <color name="chart_color">#FFFFFF</color>
+    <color name="chart_border">#000000</color>
+
+    <color name="bg_search_view">#000000</color>
+
+    <color name="text_color">#000000</color>
 </resources>

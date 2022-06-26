@@ -58,7 +58,7 @@
             android:text="@string/submit"
             android:layout_marginEnd="25dp"
             android:layout_marginBottom="25dp"
-            android:backgroundTint="@color/black"
+            android:backgroundTint="@color/submit_btn_bg"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 
@@ -68,7 +68,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="25dp"
             android:layout_marginBottom="25dp"
-            android:backgroundTint="@color/red"
+            android:backgroundTint="@color/cancel_btn_bg"
             android:text="@string/cancel"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent" />

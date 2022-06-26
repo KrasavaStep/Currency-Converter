@@ -12,7 +12,7 @@
         android:layout_height="50dp"
         android:layout_gravity="center"
         android:layout_margin="10dp"
-        android:contentDescription="icon" />
+        android:contentDescription="@string/crypto_img_desc"/>
 
     <LinearLayout
         android:layout_width="0dp"
@@ -38,7 +38,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             tools:text="BTC"
-            android:textColor="@color/black"
             />
 
     </LinearLayout>
@@ -77,7 +76,6 @@
                 tools:text="1h: -10%"
                 android:gravity="end"
                 android:layout_marginEnd="10dp"
-                android:textColor="@color/high_percent_color"
                 android:textStyle="bold"
                 />
 
@@ -86,7 +84,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 tools:text="24h: -10%"
-                android:textColor="@color/low_percent_color"
                 android:gravity="end"
                 android:layout_marginEnd="10dp"
                 android:textStyle="bold"

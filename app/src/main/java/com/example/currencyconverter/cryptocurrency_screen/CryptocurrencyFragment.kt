@@ -74,7 +74,7 @@ class CryptocurrencyFragment : Fragment(R.layout.fragment_cryptocurrency) {
                         binding.cryptoRv.visibility = View.GONE
                         if (list.isEmpty()) {
                             binding.errorImage.setImageResource(R.drawable.ic_baseline_search_24)
-                            binding.warningTextView.text = "No currencies found"
+                            binding.warningTextView.text = getString(R.string.no_cur_found)
                             binding.errorLayout.visibility = View.VISIBLE
                             return@observe
                         } else {

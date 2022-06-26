@@ -30,7 +30,7 @@
             <LinearLayout
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
                 android:gravity="center"
                 android:orientation="vertical">
 
@@ -43,7 +43,6 @@
                     android:clickable="true"
                     android:focusable="true"
                     android:textAlignment="center"
-                    android:textColor="@color/black"
                     android:textSize="12sp"
                     tools:text="US Dollar" />
 
@@ -72,7 +71,7 @@
             <LinearLayout
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="10dp"
+                android:layout_marginEnd="10dp"
                 android:gravity="center"
                 android:orientation="vertical">
 
@@ -85,7 +84,6 @@
                     android:clickable="true"
                     android:focusable="true"
                     android:textAlignment="center"
-                    android:textColor="@color/black"
                     android:textSize="12sp"
                     tools:text="Russian ruble" />
 

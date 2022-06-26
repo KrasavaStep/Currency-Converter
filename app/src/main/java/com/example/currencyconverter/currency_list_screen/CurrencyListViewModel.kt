@@ -1,11 +1,13 @@
 package com.example.currencyconverter.currency_list_screen
 
+import android.content.res.Resources
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.currencyconverter.DataEvent
+import com.example.currencyconverter.R
 import com.example.currencyconverter.ResultState
 import com.example.currencyconverter.data.Repository
 import com.example.currencyconverter.mappers.CurrencyMappers
@@ -55,34 +57,36 @@ class CurrencyListViewModel(private val repository: Repository) : ViewModel() {
                     val currencyApiModelList = currencyApiMappers.fromHashmapToList(it.data)
                     setDataToCurrencyTable(currencyApiModelList)
                     ResultState.Success(currencyApiModelList)
-                } ?: ResultState.Error(RuntimeException("Response body is null"))
-                Log.d("MyApp", response.toString())
+                } ?: ResultState.Error(
+                    RuntimeException(
+                        Resources.getSystem().getString(R.string.error_text2)
+                    )
+                )
             }
 
             override fun onFailure(call: Call<CurrencyApiResponse>, t: Throwable) {
                 _currencies.postValue(ResultState.Error(t))
-                Log.d("MyApp", t.message.toString())
             }
 
         })
     }
 
-    fun getCurrenciesFromDb(isFavourite: Boolean) : LiveData<List<CurrencyItem>>{
-        return if (isFavourite){
+    fun getCurrenciesFromDb(isFavourite: Boolean): LiveData<List<CurrencyItem>> {
+        return if (isFavourite) {
             repository.favouritesCurrencies
         } else {
             repository.allCurrencyFromDb
         }
     }
 
-    fun updateCurrency(currencyItem: CurrencyItem){
+    fun updateCurrency(currencyItem: CurrencyItem) {
         viewModelScope.launch(Dispatchers.IO) {
             repository.updateCurrencyItem(currencyItem)
         }
     }
 
-    fun getCurrencyForSearch(search: String) : LiveData<List<CurrencyItem>>{
-        return if (search.isBlank()){
+    fun getCurrencyForSearch(search: String): LiveData<List<CurrencyItem>> {
+        return if (search.isBlank()) {
             repository.allCurrencyFromDb
         } else {
             repository.getCurrencyForSearch("%$search%")
@@ -101,7 +105,11 @@ class CurrencyListViewModel(private val repository: Repository) : ViewModel() {
                     val currencyExchangeModelList = currencyApiMappers.fromHashmapToList(it.data)
                     setDataToExchangeTable(currencyExchangeModelList)
                     ResultState.Success(currencyExchangeModelList)
-                } ?: ResultState.Error(RuntimeException("Response body is null"))
+                } ?: ResultState.Error(
+                    RuntimeException(
+                        Resources.getSystem().getString(R.string.error_text2)
+                    )
+                )
                 _rates.postValue(result)
             }
 
@@ -155,10 +163,15 @@ class CurrencyListViewModel(private val repository: Repository) : ViewModel() {
                     return@withContext null
                 }
             }
-            if (result != null)
+            if (result != null) {
                 _dataForTwoCurrencies.postValue(DataEvent(result))
-            else
-                _errorResult.postValue(DataEvent("Something went wrong"))
+                _errorResult.postValue(DataEvent(""))
+            } else
+                _errorResult.postValue(
+                    DataEvent(
+                        Resources.getSystem().getString(R.string.error_text)
+                    )
+                )
         }
     }
 
@@ -230,10 +243,10 @@ class CurrencyListViewModel(private val repository: Repository) : ViewModel() {
         secondCurCode: String
     ): Float {
         return when {
-            firstCurCode == "USD" -> {
+            firstCurCode == USD_CODE -> {
                 repository.convertDollarToCurrency(firstValue, secondExRates)
             }
-            secondCurCode == "USD" -> {
+            secondCurCode == USD_CODE -> {
                 repository.convertToDollar(firstValue, firstExRates)
             }
             else -> {
@@ -250,10 +263,10 @@ class CurrencyListViewModel(private val repository: Repository) : ViewModel() {
         secondCurCode: String
     ): Float {
         return when {
-            secondCurCode == "USD" -> {
+            secondCurCode == USD_CODE -> {
                 repository.convertDollarToCurrency(secondValue, firstExRates)
             }
-            firstCurCode == "USD" -> {
+            firstCurCode == USD_CODE -> {
                 repository.convertToDollar(secondValue, secondExRates)
             }
             else -> {
@@ -262,4 +275,7 @@ class CurrencyListViewModel(private val repository: Repository) : ViewModel() {
         }
     }
 
+    companion object {
+        private const val USD_CODE = "USD"
+    }
 }

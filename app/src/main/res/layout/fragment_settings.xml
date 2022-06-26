@@ -30,7 +30,8 @@
             android:layout_margin="10dp"
             android:text="@string/decimal_number"
             android:textSize="20sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            />
 
         <TextView
             android:id="@+id/number_text"
@@ -42,7 +43,9 @@
             android:textSize="20sp"
             android:layout_margin="10dp"
             android:layout_gravity="center"
-            android:gravity="center"
+            android:gravity="end"
+            android:paddingEnd="10dp"
+            android:paddingStart="5dp"
             />
 
     </LinearLayout>
@@ -63,13 +66,14 @@
             android:layout_gravity="center"
             />
 
-        <TextView
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/switch_theme"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="0.7"
             android:layout_gravity="center"
             android:layout_margin="10dp"
-            android:text="@string/theme"
+            android:text="@string/theme_mode"
             android:textSize="20sp"
             android:textStyle="bold" />
 

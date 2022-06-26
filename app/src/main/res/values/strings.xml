@@ -1,10 +1,10 @@
 <resources>
     <string name="app_name">Currency Converter</string>
 
-    <string name="add_currency_btn_desc">add currency</string>
     <string name="swap_currency_btn_desc">swap currency</string>
 
     <string name="error_text">Something went wrong</string>
+    <string name="error_text2">Response body is null</string>
     <string name="currency_code">%1$s / %2$s</string>
     <string name="crypto_price">%1$s$</string>
     <string name="crypto_per_1h">1h:%1$s</string>
@@ -14,12 +14,28 @@
     <string name="year_chart">Chart for year</string>
     <string name="chart_desc">Prices of cryptocurrency</string>
     <string name="dialog_text">When you first launch the application, it is recommended to turn on the Internet connection</string>
-    <string name="decimal_number">Decimal number</string>
+    <string name="decimal_number">Decimal numbers</string>
     <string name="theme">Theme</string>
-    <string name="digits_dialog">Choose number og decimal digits.</string>
+    <string name="digits_dialog">Choose number of decimal digits</string>
     <string name="digits_number2">2 decimal digits</string>
     <string name="digits_number3">3 decimal digits</string>
     <string name="digits_number4">4 decimal digits</string>
     <string name="submit">Submit</string>
     <string name="cancel">Cancel</string>
+    <string name="theme_mode">Light mode</string>
+
+    <string name="setting_title">Settings</string>
+    <string name="currency_list_title">Currency list</string>
+    <string name="crypto_title">Cryptocurrency</string>
+    <string name="crypto_chart">Charts</string>
+
+    <string name="offline">Offline</string>
+    <string name="Online">Online</string>
+    <string name="hello_msg">Welcome! :)</string>
+
+    <string name="no_cur_found">No currencies found</string>
+    <string name="crypto_img_desc">icon</string>
+    <string name="refresh">Refresh</string>
+    <string name="sort_regular">Regular</string>
+    <string name="sort_favourites">Favourites</string>
 </resources>
