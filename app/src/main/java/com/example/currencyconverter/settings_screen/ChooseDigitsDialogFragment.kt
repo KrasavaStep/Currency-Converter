@@ -34,11 +34,11 @@ class ChooseDigitsDialogFragment(private val listener: DialogButtonsClickedListe
 
         _binding = DialogChooseDigitsBinding.bind(view)
 
-        prefs = activity?.getSharedPreferences(MainActivity.PREF_NAME, Context.MODE_PRIVATE)
+        prefs = activity?.getSharedPreferences(MainActivity.PREF_DECIMAL_NAME, Context.MODE_PRIVATE)
         prefs?.let {
             prefValue = it.getInt(
                 MainActivity.DECIMAL_DIGITS_KEY,
-                MainActivity.DEF_VALUE
+                MainActivity.DEF_DECIMAL_VALUE
             )
         }
 

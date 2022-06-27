@@ -20,4 +20,5 @@ val appModule = module {
     viewModel<CryptoGraphicViewModel>(named("graphicVM")){
         CryptoGraphicViewModel(repository = get())
     }
+
 }

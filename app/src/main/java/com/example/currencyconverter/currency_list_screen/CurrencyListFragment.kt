@@ -9,6 +9,7 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.widget.SearchView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.currencyconverter.*
@@ -23,10 +24,10 @@ class CurrencyListFragment : Fragment(R.layout.fragment_currency_list) {
 
     private var currencyCode1 = USD_CODE
     private var currencyCode2 = RUB_CODE
-    private var currencyValue1 = START_CURRENCY_VALUE
-    private var currencyValue2 = START_CURRENCY_VALUE
-    private var executionOrder = ORDER_POSITION_FIRST
-    private var countOfDecimalDigits = COUNT_OF_DECIMAL_DIGITS
+    private var currencyValue1 = START_CURRENCY_VALUE_RES
+    private var currencyValue2 = START_CURRENCY_VALUE_RES
+    private var executionOrder = ORDER_POSITION_FIRST_RES
+    private var countOfDecimalDigits = COUNT_OF_DECIMAL_DIGITS_RES
 
     private var _binding: FragmentCurrencyListBinding? = null
     private val binding
@@ -34,6 +35,7 @@ class CurrencyListFragment : Fragment(R.layout.fragment_currency_list) {
 
     private var prefsDecimal: SharedPreferences? = null
     private var prefsExchange: SharedPreferences? = null
+    private var prefsWidget: SharedPreferences? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,7 +43,7 @@ class CurrencyListFragment : Fragment(R.layout.fragment_currency_list) {
             CurrencyListAdapter(layoutInflater, object : CurrencyListAdapter.CurrencyClickListener {
                 override fun onCurrencyClicked(item: CurrencyItem) {
                     currencyCode2 = item.code
-                    executionOrder = ORDER_POSITION_FIRST
+                    executionOrder = ORDER_POSITION_FIRST_RES
                     setCurrencyValues()
                 }
 
@@ -59,20 +61,20 @@ class CurrencyListFragment : Fragment(R.layout.fragment_currency_list) {
         binding.currencyListRv.adapter = adapter
         binding.currencyListRv.layoutManager = LinearLayoutManager(requireContext())
 
-        prefsDecimal = activity?.getSharedPreferences(MainActivity.PREF_NAME, Context.MODE_PRIVATE)
+        prefsDecimal = activity?.getSharedPreferences(MainActivity.PREF_DECIMAL_NAME, Context.MODE_PRIVATE)
         prefsDecimal?.let {
             countOfDecimalDigits = it.getInt(
                 MainActivity.DECIMAL_DIGITS_KEY,
-                MainActivity.DEF_VALUE
+                MainActivity.DEF_DECIMAL_VALUE
             )
         }
 
         prefsExchange = activity?.getSharedPreferences(PREF_EX_NAME, Context.MODE_PRIVATE)
         prefsExchange?.let { value ->
-            currencyValue2 = value.getFloat(PREF_VAL2, START_CURRENCY_VALUE)
+            currencyValue2 = value.getFloat(PREF_VAL2, START_CURRENCY_VALUE_RES)
         }
         prefsExchange?.let { value ->
-            currencyValue1 = value.getFloat(PREF_VAL1, START_CURRENCY_VALUE)
+            currencyValue1 = value.getFloat(PREF_VAL1, START_CURRENCY_VALUE_RES)
         }
 
         val networkConnection = NetworkConnection(requireContext())
@@ -80,34 +82,35 @@ class CurrencyListFragment : Fragment(R.layout.fragment_currency_list) {
             if (it) {
                 viewModel.getExchangeRates()
                 viewModel.getAllCurrencies()
+                viewModel.getWidgetData()
                 getCurrenciesFromDb(!IS_FAVOURITE)
             } else {
                 getCurrenciesFromDb(!IS_FAVOURITE)
             }
         }
 
-        binding.currencyFirstCostTxt.afterTextChangedDebounce(TEXT_CHANGED_DELAY) { currencyValue ->
+        binding.currencyFirstCostTxt.afterTextChangedDebounce(TEXT_CHANGED_DELAY_RES) { currencyValue ->
             if (currencyValue.isNotBlank()) {
                 val value = currencyValue.replace(',', '.')
                 currencyValue1 = value.toFloat()
-                executionOrder = ORDER_POSITION_FIRST
+                executionOrder = ORDER_POSITION_FIRST_RES
                 setCurrencyValues()
             } else {
                 currencyValue1 = 0f
-                executionOrder = ORDER_POSITION_FIRST
+                executionOrder = ORDER_POSITION_FIRST_RES
                 setCurrencyValues()
             }
         }
 
-        binding.currencySecondCostTxt.afterTextChangedDebounce(TEXT_CHANGED_DELAY) { currencyValue ->
+        binding.currencySecondCostTxt.afterTextChangedDebounce(TEXT_CHANGED_DELAY_RES) { currencyValue ->
             if (currencyValue.isNotBlank()) {
                 val value = currencyValue.replace(',', '.')
                 currencyValue2 = value.toFloat()
-                executionOrder = ORDER_POSITION_SECOND
+                executionOrder = ORDER_POSITION_SECOND_RES
                 setCurrencyValues()
             } else {
                 currencyValue2 = 0f
-                executionOrder = ORDER_POSITION_FIRST
+                executionOrder = ORDER_POSITION_FIRST_RES
                 setCurrencyValues()
             }
         }
@@ -143,7 +146,7 @@ class CurrencyListFragment : Fragment(R.layout.fragment_currency_list) {
             val tempCode = currencyCode1
             currencyCode1 = currencyCode2
             currencyCode2 = tempCode
-            executionOrder = ORDER_POSITION_FIRST
+            executionOrder = ORDER_POSITION_FIRST_RES
             setCurrencyValues()
         }
 
@@ -152,19 +155,17 @@ class CurrencyListFragment : Fragment(R.layout.fragment_currency_list) {
                 is ResultState.Error -> {
                     binding.currencyListProgressBar.visibility = View.GONE
                     binding.currencyListRv.visibility = View.VISIBLE
-                    it.exception.message?.let { it1 -> Log.d(TAG, it1) }
+                    it.exception.message?.let { it1 -> Log.d(getString(TAG_RES), it1) }
                 }
                 is ResultState.Success -> {
                     binding.currencyListProgressBar.visibility = View.GONE
                     binding.errorLayout.visibility = View.GONE
                     binding.currencyListRv.visibility = View.VISIBLE
-                    Log.d(TAG, SUCCESS)
                 }
                 is ResultState.Loading -> {
                     binding.currencyListProgressBar.visibility = View.VISIBLE
                     binding.currencyListRv.visibility = View.GONE
                     binding.errorLayout.visibility = View.GONE
-                    Log.d(TAG, LOADING)
                 }
             }
         }
@@ -174,24 +175,22 @@ class CurrencyListFragment : Fragment(R.layout.fragment_currency_list) {
                 is ResultState.Error -> {
                     binding.currencyListProgressBar.visibility = View.GONE
                     binding.currencyListRv.visibility = View.VISIBLE
-                    it.exception.message?.let { it1 -> Log.d(TAG, it1) }
+                    it.exception.message?.let { it1 -> Log.d(getString(TAG_RES), it1) }
                 }
                 is ResultState.Success -> {
                     binding.currencyListProgressBar.visibility = View.GONE
                     binding.errorLayout.visibility = View.GONE
                     binding.currencyListRv.visibility = View.VISIBLE
-                    Log.d(TAG, SUCCESS)
                 }
                 is ResultState.Loading -> {
                     binding.currencyListProgressBar.visibility = View.VISIBLE
                     binding.currencyListRv.visibility = View.GONE
                     binding.errorLayout.visibility = View.GONE
-                    Log.d(TAG, LOADING)
                 }
             }
         }
 
-
+        getWidgetData()
     }
 
 
@@ -207,10 +206,10 @@ class CurrencyListFragment : Fragment(R.layout.fragment_currency_list) {
                         currencyValue2
                     )
 
-                if (executionOrder == ORDER_POSITION_FIRST) {
+                if (executionOrder == ORDER_POSITION_FIRST_RES) {
                     currencyValue2 = result
                     prefsExchange?.edit()?.putFloat(PREF_VAL2, currencyValue2)?.apply()
-                } else if (executionOrder == ORDER_POSITION_SECOND) {
+                } else if (executionOrder == ORDER_POSITION_SECOND_RES) {
                     currencyValue1 = result
                     prefsExchange?.edit()?.putFloat(PREF_VAL1, currencyValue1)?.apply()
                 }
@@ -230,14 +229,13 @@ class CurrencyListFragment : Fragment(R.layout.fragment_currency_list) {
             }
         }
 
-        viewModel.errorResult.observe(viewLifecycleOwner){
+        viewModel.errorResult.observe(viewLifecycleOwner) {
             it.getContentIfNotHandled()?.let { res ->
-                if (res.isNotEmpty()){
+                if (res.isNotEmpty()) {
                     binding.currencyListRv.visibility = View.GONE
                     binding.errorLayout.visibility = View.VISIBLE
                     binding.warningTextView.text = res
-                }
-                else {
+                } else {
                     binding.currencyListRv.visibility = View.VISIBLE
                     binding.errorLayout.visibility = View.GONE
                 }
@@ -295,21 +293,46 @@ class CurrencyListFragment : Fragment(R.layout.fragment_currency_list) {
         }
     }
 
+    private fun getWidgetData() {
+        prefsWidget = activity?.getSharedPreferences(MainActivity.PREF_WIDGET_NAME, Context.MODE_PRIVATE)
+        viewModel.widgetData.observe(viewLifecycleOwner) {
+            when (it) {
+                is ResultState.Error -> {
+                    Toast.makeText(requireContext(), R.string.widget_error, Toast.LENGTH_SHORT)
+                        .show()
+                }
+                is ResultState.Loading -> {
+                    Toast.makeText(requireContext(), R.string.widget_loading, Toast.LENGTH_SHORT)
+                        .show()
+                }
+                is ResultState.Success -> {
+                    Toast.makeText(requireContext(), R.string.widget_success, Toast.LENGTH_SHORT)
+                        .show()
+                    prefsWidget?.edit()?.putFloat(MainActivity.PREF_WIDGET_KEY1, it.data[0])?.apply()
+                    prefsWidget?.edit()?.putFloat(MainActivity.PREF_WIDGET_KEY2, it.data[1])?.apply()
+                    prefsWidget?.edit()?.putFloat(MainActivity.PREF_WIDGET_KEY3, it.data[2])?.apply()
+                }
+            }
+        }
+    }
+
+
     companion object {
-        private const val ORDER_POSITION_FIRST = 1
-        private const val ORDER_POSITION_SECOND = 2
-        private const val TEXT_CHANGED_DELAY = 1000L
-        private const val START_CURRENCY_VALUE = 1f
+        private const val ORDER_POSITION_FIRST_RES = 1
+        private const val ORDER_POSITION_SECOND_RES = 2
+        private const val TEXT_CHANGED_DELAY_RES = 1000L
+        private const val START_CURRENCY_VALUE_RES = 1f
+        private const val IS_FAVOURITE = true
+        private const val COUNT_OF_DECIMAL_DIGITS_RES = 3
+
         private const val USD_CODE = "USD"
         private const val RUB_CODE = "RUB"
-        private const val IS_FAVOURITE = true
-        private const val COUNT_OF_DECIMAL_DIGITS = 3
+
         private const val PREF_EX_NAME = "exchange_values"
         private const val PREF_VAL1 = "value_ex1"
         private const val PREF_VAL2 = "value_ex2"
-        private const val TAG = "curListMsg"
-        private const val SUCCESS = "success"
-        private const val LOADING = "loading"
+
+        private const val TAG_RES = R.string.cur_list_tag
     }
 
 }

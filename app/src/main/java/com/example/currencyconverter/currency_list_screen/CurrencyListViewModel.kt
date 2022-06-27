@@ -41,6 +41,9 @@ class CurrencyListViewModel(private val repository: Repository) : ViewModel() {
     private val _errorResult = MutableLiveData<DataEvent<String>>()
     val errorResult: LiveData<DataEvent<String>> = _errorResult
 
+    private val _widgetData = MutableLiveData<ResultState<List<Float>>>()
+    val widgetData: LiveData<ResultState<List<Float>>> = _widgetData
+
     private val _firstCurrencyName = MutableLiveData<DataEvent<String>>()
     val firstCurrencyName: LiveData<DataEvent<String>> = _firstCurrencyName
     private val _secondCurrencyName = MutableLiveData<DataEvent<String>>()
@@ -274,6 +277,27 @@ class CurrencyListViewModel(private val repository: Repository) : ViewModel() {
             }
         }
     }
+
+    //widget
+    fun getWidgetData() = viewModelScope.launch(Dispatchers.IO) {
+        _widgetData.postValue(ResultState.Loading())
+        try {
+            val result1 = repository.getUSDtoRUB()
+            val result2 = repository.getUSDtoEUR()
+            val result3 = repository.getEURtoRUB()
+
+            val list = mutableListOf<Float>()
+            list.add(result1.conversion_rate)
+            list.add(result2.conversion_rate)
+            list.add(result3.conversion_rate)
+
+            _widgetData.postValue(ResultState.Success(list))
+
+        } catch (ex: Exception){
+            _widgetData.postValue(ResultState.Error(ex))
+        }
+    }
+
 
     companion object {
         private const val USD_CODE = "USD"

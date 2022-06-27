@@ -3,11 +3,8 @@ package com.example.currencyconverter
 import android.content.Context
 import android.content.DialogInterface
 import android.content.SharedPreferences
-import android.content.res.Resources
-import android.graphics.drawable.ColorDrawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.FragmentResultListener
 import androidx.navigation.NavController
@@ -19,7 +16,6 @@ import androidx.navigation.ui.setupWithNavController
 import com.example.currencyconverter.internet_attention_dialog_fragment.InternetAttentionDialogFragment
 import com.example.currencyconverter.databinding.ActivityMainBinding
 import com.google.android.material.snackbar.Snackbar
-import org.koin.android.ext.android.get
 
 class MainActivity : AppCompatActivity() {
 
@@ -76,15 +72,14 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        prefsSettings = getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
-        prefsSettings.getInt(DECIMAL_DIGITS_KEY, DEF_VALUE)
+        prefsSettings = getSharedPreferences(PREF_DECIMAL_NAME, Context.MODE_PRIVATE)
+        prefsSettings.getInt(DECIMAL_DIGITS_KEY, DEF_DECIMAL_VALUE)
 
-        prefsThemeMode = getSharedPreferences(PREF_NIGHT, Context.MODE_PRIVATE)
+        prefsThemeMode = getSharedPreferences(PREF_NIGHT_NAME, Context.MODE_PRIVATE)
         val isNight = prefsThemeMode.getBoolean(PREF_NIGHT_KEY, PREF_NIGHT_VAL)
         if (isNight) {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
         }
-
     }
 
     override fun onSupportNavigateUp(): Boolean {
@@ -126,6 +121,8 @@ class MainActivity : AppCompatActivity() {
             })
     }
 
+
+
     companion object {
         private const val OFFLINE_VAL = R.string.offline
         private const val ONLINE_VAL = R.string.Online
@@ -134,13 +131,19 @@ class MainActivity : AppCompatActivity() {
         private const val PREF_FIRST_LAUNCH_NAME = "com.example.currencyconverter"
         private const val PREF_FIRST_LAUNCH_KEY = "firstrun"
 
-        const val PREF_NAME = "app_prefs"
+        const val PREF_DECIMAL_NAME = "app_prefs"
         const val DECIMAL_DIGITS_KEY = "decimal_digits"
-        const val DEF_VALUE = 3
+        const val DEF_DECIMAL_VALUE = 3
 
-        const val PREF_NIGHT = "night"
+        const val PREF_NIGHT_NAME = "night"
         const val PREF_NIGHT_KEY = "night_mode"
         const val PREF_NIGHT_VAL = false
+
+        const val PREF_WIDGET_NAME = "widget"
+        const val PREF_WIDGET_KEY1 = "usd_to_rub"
+        const val PREF_WIDGET_KEY2 = "usd_to_eur"
+        const val PREF_WIDGET_KEY3 = "eur_to_rub"
+        const val DEF_VAL_WIDGET = 1f
 
         private var CURRENCY_LIST_TITLE = R.string.currency_list_title
         private var CRYPTO_LIST_TITLE = R.string.crypto_title

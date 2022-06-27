@@ -2,15 +2,11 @@ package com.example.currencyconverter.crypto_graphic_screen
 
 import android.os.Bundle
 import android.util.Log
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.navArgs
 import com.example.currencyconverter.R
 import com.example.currencyconverter.ResultState
-import com.example.currencyconverter.currency_list_screen.CurrencyListFragment
 import com.example.currencyconverter.databinding.FragmentCryptoGraphicBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.qualifier.named
@@ -46,7 +42,7 @@ class CryptoGraphicFragment : Fragment(R.layout.fragment_crypto_graphic) {
                 }
                 is ResultState.Error -> {
                     binding.progress.visibility = View.GONE
-                    Log.d(TAG, it.exception.message.toString())
+                    Log.d(getString(TAG_RES), it.exception.message.toString())
                 }
             }
         }
@@ -62,39 +58,51 @@ class CryptoGraphicFragment : Fragment(R.layout.fragment_crypto_graphic) {
                 }
                 is ResultState.Error -> {
                     binding.progress2.visibility = View.GONE
-                    Log.d(TAG, it.exception.message.toString())
+                    Log.d(getString(TAG_RES), it.exception.message.toString())
                 }
             }
         }
 
-        viewModel.dayOHLCData.observe(viewLifecycleOwner){
+        viewModel.dayOHLCData.observe(viewLifecycleOwner) {
             it.getContentIfNotHandled()?.let { data ->
                 binding.graphDay.data = data
-                binding.graphDay.animateXY(DURATION_MILLIS_X, DURATION_MILLIS_Y)
+                binding.graphDay.animateXY(
+                    resources.getInteger(DURATION_MILLIS_X_RES),
+                    resources.getInteger(DURATION_MILLIS_Y_RES)
+                )
                 binding.graphDay.contentDescription = getString(R.string.chart_desc)
-                binding.graphDay.setScaleMinima(SCALE_X, SCALE_Y)
+                binding.graphDay.setScaleMinima(
+                    resources.getInteger(SCALE_X_RES).toFloat(),
+                    resources.getInteger(SCALE_Y_RES).toFloat()
+                )
             }
         }
 
-        viewModel.yearOHLCData.observe(viewLifecycleOwner){
+        viewModel.yearOHLCData.observe(viewLifecycleOwner) {
             it.getContentIfNotHandled()?.let { data ->
                 binding.graphYear.data = data
-                binding.graphYear.animateXY(DURATION_MILLIS_X, DURATION_MILLIS_Y)
+                binding.graphYear.animateXY(
+                    resources.getInteger(DURATION_MILLIS_X_RES),
+                    resources.getInteger(DURATION_MILLIS_Y_RES)
+                )
                 binding.graphYear.contentDescription = getString(R.string.chart_desc)
-                binding.graphYear.setScaleMinima(SCALE_X, SCALE_Y)
+                binding.graphYear.setScaleMinima(
+                    resources.getInteger(SCALE_X_RES).toFloat(),
+                    resources.getInteger(SCALE_Y_RES).toFloat()
+                )
             }
         }
-
 
 
     }
 
     companion object {
-        private const val DURATION_MILLIS_X = 2000
-        private const val DURATION_MILLIS_Y = 2000
-        private const val SCALE_X = 2f
-        private const val SCALE_Y = 0f
-        private const val TAG = "CurrencyAppEx"
+        private const val DURATION_MILLIS_X_RES = R.integer.DURATION_MILLIS_X
+        private const val DURATION_MILLIS_Y_RES = R.integer.DURATION_MILLIS_Y
+        private const val SCALE_X_RES = R.integer.SCALE_X
+        private const val SCALE_Y_RES = R.integer.SCALE_Y
+        private const val TAG_RES = R.string.crypto_gr_tag
 
     }
+
 }

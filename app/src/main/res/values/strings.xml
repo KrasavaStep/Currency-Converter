@@ -38,4 +38,20 @@
     <string name="refresh">Refresh</string>
     <string name="sort_regular">Regular</string>
     <string name="sort_favourites">Favourites</string>
+
+    <string name="appwidget_text_btn">Bank</string>
+    <string name="add_widget">Add widget</string>
+    <string name="app_widget_description">Mini converter</string>
+
+    <string name="us_plug">1 USD</string>
+    <string name="euro_plug">1 EUR</string>
+    <string name="rub_plug">1 RUB</string>
+
+    <string name="widget_error">An error occurred while loading widget data</string>
+    <string name="widget_loading">Loading Widget Data</string>
+    <string name="widget_success">Data upload was successful</string>
+
+    <string name="settings_fragment_tag" translatable="false">choose_digits_dialog</string>
+    <string name="crypto_gr_tag" translatable="false">CurrencyAppEx</string>
+    <string name="cur_list_tag" translatable="false">curListMsg</string>
 </resources>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <integer name="DURATION_MILLIS_X">2000</integer>
+    <integer name="DURATION_MILLIS_Y">2000</integer>
+    <integer name="SCALE_X">2</integer>
+    <integer name="SCALE_Y">0</integer>
+
+</resources>

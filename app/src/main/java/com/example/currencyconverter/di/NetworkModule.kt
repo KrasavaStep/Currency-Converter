@@ -4,6 +4,7 @@ import com.example.currencyconverter.BuildConfig
 import com.example.currencyconverter.NetworkConnection
 import com.example.currencyconverter.data.cryptocurrency_api.CryptocurrencyApi
 import com.example.currencyconverter.data.currency_api.CurrencyApi
+import com.example.currencyconverter.data.currency_api_widget.CurrencyWidgetAPI
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.core.qualifier.named
@@ -33,6 +34,14 @@ val networkModule = module {
             .build()
     }
 
+    single<Retrofit>(named("WidgetCurApi")){
+        Retrofit.Builder()
+            .addConverterFactory(GsonConverterFactory.create())
+            .baseUrl(CurrencyWidgetAPI.WIDGET_CUR_API_URL)
+            .client(get())
+            .build()
+    }
+
     single<OkHttpClient> {
         val httpClient = OkHttpClient.Builder()
         httpClient.build()
@@ -51,6 +60,10 @@ val networkModule = module {
 
     single<CryptocurrencyApi> {
         (get<Retrofit>(named("CryptoApi"))).create(CryptocurrencyApi::class.java)
+    }
+
+    single<CurrencyWidgetAPI>{
+        (get<Retrofit>(named("WidgetCurApi"))).create(CurrencyWidgetAPI::class.java)
     }
 }
 

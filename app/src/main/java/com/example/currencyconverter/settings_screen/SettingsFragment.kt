@@ -5,15 +5,10 @@ import android.content.SharedPreferences
 import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.view.View
-import android.widget.CompoundButton
 import androidx.appcompat.app.AppCompatDelegate
-import androidx.datastore.core.DataStore
-import androidx.datastore.preferences.core.Preferences
-import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.fragment.app.Fragment
 import com.example.currencyconverter.MainActivity
 import com.example.currencyconverter.R
-import com.example.currencyconverter.databinding.FragmentCurrencyListBinding
 import com.example.currencyconverter.databinding.FragmentSettingsBinding
 
 class SettingsFragment : Fragment(R.layout.fragment_settings) {
@@ -30,13 +25,13 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentSettingsBinding.bind(view)
 
-        prefs = activity?.getSharedPreferences(MainActivity.PREF_NAME, Context.MODE_PRIVATE)
+        prefs = activity?.getSharedPreferences(MainActivity.PREF_DECIMAL_NAME, Context.MODE_PRIVATE)
         prefs?.let {
-            prefValue = it.getInt(MainActivity.DECIMAL_DIGITS_KEY, MainActivity.DEF_VALUE)
+            prefValue = it.getInt(MainActivity.DECIMAL_DIGITS_KEY, MainActivity.DEF_DECIMAL_VALUE)
         }
 
         prefsThemeMode =
-            activity?.getSharedPreferences(MainActivity.PREF_NIGHT, Context.MODE_PRIVATE)
+            activity?.getSharedPreferences(MainActivity.PREF_NIGHT_NAME, Context.MODE_PRIVATE)
         prefsThemeMode?.let {
             binding.switchTheme.isChecked =
                 it.getBoolean(MainActivity.PREF_NIGHT_KEY, MainActivity.PREF_NIGHT_VAL)
@@ -56,7 +51,7 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
         })
 
         binding.decimalLayout.setOnClickListener {
-            dialog.show(parentFragmentManager, TAG)
+            dialog.show(parentFragmentManager, getString(TAG_RES))
         }
 
         binding.switchTheme.setOnCheckedChangeListener { buttonView, isChecked ->
@@ -74,6 +69,6 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
     }
 
     companion object {
-        private val TAG = "choose_digits_dialog"
+        private const val TAG_RES = R.string.settings_fragment_tag
     }
 }

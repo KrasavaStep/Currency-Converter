@@ -5,13 +5,19 @@ import com.example.currencyconverter.data.cryptocurrency_api.CryptocurrencyApi
 import com.example.currencyconverter.data.currency_api.CurrencyApi
 import com.example.currencyconverter.data.currency_api.models.CurrencyApiResponse
 import com.example.currencyconverter.data.currency_api.models.CurrencyExchangeResponse
+import com.example.currencyconverter.data.currency_api_widget.CurrencyWidgetAPI
 import com.example.currencyconverter.data.db.CurrencyDao
 import com.example.currencyconverter.data.db.entities.CryptocurrencyItem
 import com.example.currencyconverter.data.db.entities.CurrencyItem
 import com.example.currencyconverter.data.db.entities.ExchangeItem
 import retrofit2.Callback
 
-class Repository(private val currencyApi: CurrencyApi, private val currencyDao: CurrencyDao, private val cryptoApi: CryptocurrencyApi) {
+class Repository(
+    private val currencyApi: CurrencyApi,
+    private val currencyDao: CurrencyDao,
+    private val cryptoApi: CryptocurrencyApi,
+    private val widgetCurApi: CurrencyWidgetAPI
+) {
     val allCurrencyFromDb: LiveData<List<CurrencyItem>> = currencyDao.getAllData()
     val favouritesCurrencies: LiveData<List<CurrencyItem>> = currencyDao.getFavouritesCurrencies()
     val allCryptos: LiveData<List<CryptocurrencyItem>> = currencyDao.getAllCryptos()
@@ -39,7 +45,7 @@ class Repository(private val currencyApi: CurrencyApi, private val currencyDao: 
         }
     }
 
-    suspend fun updateCurrencyItem(currencyItem: CurrencyItem){
+    suspend fun updateCurrencyItem(currencyItem: CurrencyItem) {
         currencyDao.updateCurrencyItem(currencyItem)
     }
 
@@ -84,4 +90,11 @@ class Repository(private val currencyApi: CurrencyApi, private val currencyDao: 
     suspend fun getOHLCForYear(id: String) = cryptoApi.getCryptoOHLCForYear(id)
 
     fun getCryptoForSearch(name: String) = currencyDao.getCryptoForSearch(name)
+
+    //Currency for widget
+    suspend fun getUSDtoRUB() = widgetCurApi.getUSDtoRUB()
+
+    suspend fun getUSDtoEUR() = widgetCurApi.getUSDtoEUR()
+
+    suspend fun getEURtoRUB() = widgetCurApi.getEURtoRUB()
 }
