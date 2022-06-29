@@ -16,21 +16,11 @@ The Currency Converter application combines these functions together to be usefu
 ---
 ## Technologies that was used
 ### Main
-- [MVVM][1] and [LiveData][5] (Model View ViewModel pattern)
-- [Koin][2] (Dependency injection)
-- [Room][3] (Database)
-- [Coroutines][4] (Asynchronous programming and threads)
-- [Retrofit][8] (Networking)
+- [MVVM](https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93viewmodel) and [LiveData](https://developer.android.com/topic/libraries/architecture/livedata) (Model View ViewModel pattern)
+- [Koin](https://insert-koin.io/) (Dependency injection)
+- [Room](https://developer.android.com/training/data-storage/room) (Database)
+- [Coroutines](https://kotlinlang.org/docs/coroutines-overview.html) (Asynchronous programming and threads)
+- [Retrofit](https://square.github.io/retrofit/) (Networking)
 ### Others
-- [Navigation Graph][6] (Navigation between fragments)
-- [Charts][7]
-
-
-[1]: (https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93viewmodel)
-[2]: (https://insert-koin.io/)
-[3]: (https://developer.android.com/training/data-storage/room)
-[4]: (https://kotlinlang.org/docs/coroutines-overview.html)
-[5]: (https://developer.android.com/topic/libraries/architecture/livedata)
-[6]: (https://developer.android.com/reference/androidx/navigation/NavGraph)
-[7]: (https://github.com/PhilJay/MPAndroidChart)
-[8]: (https://square.github.io/retrofit/)
+- [Navigation Graph](https://developer.android.com/reference/androidx/navigation/NavGraph) (Navigation between fragments)
+- [Charts](https://github.com/PhilJay/MPAndroidChart)
