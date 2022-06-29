@@ -3,8 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/currency_list_item_bg"
-    android:layout_margin="10dp"
+    android:background="@drawable/crypto_item_bg"
+
     >
 
     <CheckBox

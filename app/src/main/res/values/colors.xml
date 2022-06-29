@@ -9,8 +9,8 @@
     <color name="white">#FFFFFFFF</color>
 
     <color name="bg_color">#EEFFFE</color>
-    <color name="main_color">#0BE362</color>
-    <color name="list_item_bg_color">#A7E8D3</color>
+    <color name="main_color">#218383</color>
+    <color name="list_item_bg_color">#90FFFF</color>
     <color name="currency_cost_bg_color">#3FDAD5</color>
     <color name="currency_swap_block_bg">#DFF2F2</color>
 

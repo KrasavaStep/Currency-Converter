@@ -282,11 +282,14 @@ class CurrencyListFragment : Fragment(R.layout.fragment_currency_list) {
         viewModel.getCurrenciesFromDb(isFavourite).observe(viewLifecycleOwner) {
             if (it.isEmpty()) {
                 binding.currencyListProgressBar.visibility = View.GONE
+                binding.currencyListRv.visibility = View.GONE
                 binding.errorLayout.visibility = View.VISIBLE
+                binding.warningTextView.text = getString(R.string.no_cur_found)
                 return@observe
             } else {
                 binding.currencyListProgressBar.visibility = View.GONE
                 binding.errorLayout.visibility = View.GONE
+                binding.currencyListRv.visibility = View.VISIBLE
             }
             adapter.setData(it)
             setCurrencyValues()

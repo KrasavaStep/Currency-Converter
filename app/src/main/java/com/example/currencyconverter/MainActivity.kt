@@ -3,6 +3,7 @@ package com.example.currencyconverter
 import android.content.Context
 import android.content.DialogInterface
 import android.content.SharedPreferences
+import android.graphics.drawable.Drawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatDelegate
@@ -13,6 +14,7 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat
 import com.example.currencyconverter.internet_attention_dialog_fragment.InternetAttentionDialogFragment
 import com.example.currencyconverter.databinding.ActivityMainBinding
 import com.google.android.material.snackbar.Snackbar
@@ -46,7 +48,7 @@ class MainActivity : AppCompatActivity() {
         setupActionBarWithNavController(navController, appBarConfiguration)
 
         listener =
-            NavController.OnDestinationChangedListener { controller, destination, arguments ->
+            NavController.OnDestinationChangedListener { _, destination, _ ->
                 when (destination.id) {
                     R.id.currencyListFragment -> {
                         supportActionBar?.setTitle(CURRENCY_LIST_TITLE)
@@ -120,7 +122,6 @@ class MainActivity : AppCompatActivity() {
                 }
             })
     }
-
 
 
     companion object {
