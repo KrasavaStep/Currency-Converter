@@ -8,10 +8,10 @@ The Currency Converter application combines these functions together to be usefu
 ---
 ## Preview
 ![screen1](./app/src/screens/Screen1.png)
-![screen2](./app/src/screens/Screen2.png)
-![screen3](./app/src/screens/Screen3.png)
-![screen4](./app/src/screens/Screen4.png)
-![screen5](./app/src/screens/Screen5.png)
+![screen2](./app/src/screens/screen2.png)
+![screen3](./app/src/screens/screen3.png)
+![screen4](./app/src/screens/screen4.png)
+![screen5](./app/src/screens/screen5.png)
 
 ---
 ## Technologies that was used
