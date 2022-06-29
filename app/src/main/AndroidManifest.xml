@@ -22,8 +22,10 @@
 
             <meta-data
                 android:name="android.appwidget.provider"
-                android:resource="@xml/new_app_widget_info" />
+                android:resource="@xml/currency_widget_info" />
         </receiver>
+
+        <service android:name=".widget.UpdateService" />
 
         <activity
             android:name=".MainActivity"
