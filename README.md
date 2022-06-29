@@ -33,7 +33,7 @@ Or to save a click, [this link](https://github.com/KrasavaStep/Currency-Converte
 
 ---
 ## License
-### MIT License
+#### MIT License
 
 Copyright (c) 2022 [Stepan](https://github.com/KrasavaStep)
 
