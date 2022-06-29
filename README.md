@@ -33,9 +33,9 @@ Or to save a click, [this link](https://github.com/KrasavaStep/Currency-Converte
 
 ---
 ## License
-MIT License
+### MIT License
 
-Copyright (c) 2022 Stepan
+Copyright (c) 2022 [Stepan](https://github.com/KrasavaStep)
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
