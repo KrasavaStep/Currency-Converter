@@ -1,5 +1,6 @@
 package com.example.currencyconverter.crypto_graphic_screen
 
+import android.app.Application
 import android.content.res.Resources
 import android.graphics.Color
 import android.os.Build
@@ -7,6 +8,7 @@ import androidx.annotation.RequiresApi
 import androidx.lifecycle.*
 import com.example.currencyconverter.DataEvent
 import com.example.currencyconverter.R
+import com.example.currencyconverter.ResourcesProvider
 import com.example.currencyconverter.ResultState
 import com.example.currencyconverter.data.Repository
 import com.github.mikephil.charting.data.Entry
@@ -22,7 +24,7 @@ import java.time.format.DateTimeFormatter
 import java.util.*
 import kotlin.collections.ArrayList
 
-class CryptoGraphicViewModel(private val repository: Repository) : ViewModel() {
+class CryptoGraphicViewModel(private val repository: Repository, private val resourcesProvider: ResourcesProvider) : ViewModel() {
 
     private val _dayOHLC = MutableLiveData<ResultState<List<List<Double>>>>()
     val dayOHLC: LiveData<ResultState<List<List<Double>>>> = _dayOHLC
@@ -73,8 +75,9 @@ class CryptoGraphicViewModel(private val repository: Repository) : ViewModel() {
 
         val timeList: ArrayList<String> = timeListDef.await()
         val priceList: ArrayList<Entry> = priceListDef.await()
+
         val lineDataSet =
-            LineDataSet(priceList, Resources.getSystem().getString(R.string.chart_desc))
+            LineDataSet(priceList, resourcesProvider.getString(R.string.chart_desc))
         lineDataSet.color = Color.rgb(45, 120, 179)
         lineDataSet.circleRadius = 0f
         lineDataSet.setDrawFilled(true)
@@ -105,7 +108,7 @@ class CryptoGraphicViewModel(private val repository: Repository) : ViewModel() {
         val priceList: ArrayList<Entry> = priceListDef.await()
 
         val lineDataSet =
-            LineDataSet(priceList, Resources.getSystem().getString(R.string.chart_desc))
+            LineDataSet(priceList, resourcesProvider.getString(R.string.chart_desc))
         lineDataSet.color = Color.rgb(45, 120, 179)
         lineDataSet.circleRadius = 0f
         lineDataSet.setDrawFilled(true)

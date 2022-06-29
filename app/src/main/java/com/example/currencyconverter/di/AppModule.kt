@@ -1,5 +1,6 @@
 package com.example.currencyconverter.di
 
+import com.example.currencyconverter.ResourcesProvider
 import com.example.currencyconverter.crypto_graphic_screen.CryptoGraphicViewModel
 import com.example.currencyconverter.cryptocurrency_screen.CryptocurrencyViewModel
 import com.example.currencyconverter.currency_list_screen.CurrencyListViewModel
@@ -18,7 +19,11 @@ val appModule = module {
     }
 
     viewModel<CryptoGraphicViewModel>(named("graphicVM")){
-        CryptoGraphicViewModel(repository = get())
+        CryptoGraphicViewModel(repository = get(), resourcesProvider = get())
     }
 
+
+    single<ResourcesProvider> {
+        ResourcesProvider(get())
+    }
 }
