@@ -24,3 +24,9 @@ The Currency Converter application combines these functions together to be usefu
 ### Others
 - [Navigation Graph](https://developer.android.com/reference/androidx/navigation/NavGraph) (Navigation between fragments)
 - [Charts](https://github.com/PhilJay/MPAndroidChart)
+
+---
+##Downlods
+The latest release and pre-release versions are [available on GitHub](https://github.com/KrasavaStep/Currency-Converter/releases).
+
+Or to save a click, [this link](https://github.com/KrasavaStep/Currency-Converter/releases/tag/v1.0.0) should always point to the most recent release.
