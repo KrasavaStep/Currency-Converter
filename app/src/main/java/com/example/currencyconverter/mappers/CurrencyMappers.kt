@@ -25,8 +25,14 @@ class CurrencyMappers {
         symbol = currency.symbol
     )
 
-    fun toCurrencyItemList(list: List<CurrencyApiModel>) = list.map {
-        toCurrencyItem(it)
+    fun toCurrencyItemList(list: List<CurrencyApiModel>): List<CurrencyItem> {
+        val curItemList = mutableListOf<CurrencyItem>()
+        for (item in list) {
+            if (item != null) {
+                curItemList.add(toCurrencyItem(item))
+            }
+        }
+        return curItemList
     }
 
     private fun toExchangeItem(exchange: CurrencyExchangeModel) = ExchangeItem(
