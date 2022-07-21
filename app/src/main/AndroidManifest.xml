@@ -25,8 +25,6 @@
                 android:resource="@xml/currency_widget_info" />
         </receiver>
 
-        <service android:name=".widget.UpdateService" />
-
         <activity
             android:name=".MainActivity"
             android:exported="true">

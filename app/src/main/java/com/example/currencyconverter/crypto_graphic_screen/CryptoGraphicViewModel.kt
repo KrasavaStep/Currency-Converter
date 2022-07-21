@@ -1,30 +1,23 @@
 package com.example.currencyconverter.crypto_graphic_screen
 
-import android.app.Application
-import android.content.res.Resources
 import android.graphics.Color
-import android.os.Build
-import androidx.annotation.RequiresApi
 import androidx.lifecycle.*
 import com.example.currencyconverter.DataEvent
 import com.example.currencyconverter.R
 import com.example.currencyconverter.ResourcesProvider
 import com.example.currencyconverter.ResultState
-import com.example.currencyconverter.data.Repository
+import com.example.currencyconverter.data.CryptoRepository
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
-import java.text.DateFormat
 import java.text.SimpleDateFormat
-import java.time.Instant
-import java.time.format.DateTimeFormatter
 import java.util.*
 import kotlin.collections.ArrayList
 
-class CryptoGraphicViewModel(private val repository: Repository, private val resourcesProvider: ResourcesProvider) : ViewModel() {
+class CryptoGraphicViewModel(private val repository: CryptoRepository, private val resourcesProvider: ResourcesProvider) : ViewModel() {
 
     private val _dayOHLC = MutableLiveData<ResultState<List<List<Double>>>>()
     val dayOHLC: LiveData<ResultState<List<List<Double>>>> = _dayOHLC

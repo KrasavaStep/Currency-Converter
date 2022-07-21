@@ -1,21 +1,17 @@
 package com.example.currencyconverter.cryptocurrency_screen
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.currencyconverter.DataEvent
-import com.example.currencyconverter.data.Repository
-import com.example.currencyconverter.data.cryptocurrency_api.models.CryptoDataResponse
+import com.example.currencyconverter.data.CryptoRepository
 import com.example.currencyconverter.data.db.entities.CryptocurrencyItem
-import com.example.currencyconverter.data.db.entities.CurrencyItem
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class CryptocurrencyViewModel(private val repository: Repository) : ViewModel() {
+class CryptocurrencyViewModel(private val repository: CryptoRepository) : ViewModel() {
 
     private var _result = MutableLiveData<DataEvent<Boolean>>()
     val result: LiveData<DataEvent<Boolean>> = _result

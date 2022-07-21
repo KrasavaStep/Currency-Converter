@@ -16,7 +16,7 @@ class InternetAttentionDialogFragment : DialogFragment() {
         }
         return AlertDialog.Builder(requireContext())
             .setCancelable(true)
-            .setTitle("Choose currency")
+            .setTitle("Attention")
             .setNegativeButton("Dismiss", listener)
             .setView(R.layout.dialog_internet_attention)
             .create()

@@ -1,7 +1,6 @@
 package com.example.currencyconverter.currency_list_screen
 
 import android.content.res.Resources
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -9,7 +8,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.currencyconverter.DataEvent
 import com.example.currencyconverter.R
 import com.example.currencyconverter.ResultState
-import com.example.currencyconverter.data.Repository
+import com.example.currencyconverter.data.CurrencyRepository
 import com.example.currencyconverter.mappers.CurrencyMappers
 import com.example.currencyconverter.data.currency_api.models.CurrencyApiModel
 import com.example.currencyconverter.data.currency_api.models.CurrencyApiResponse
@@ -23,7 +22,7 @@ import retrofit2.Callback
 import retrofit2.Response
 import java.lang.RuntimeException
 
-class CurrencyListViewModel(private val repository: Repository) : ViewModel() {
+class CurrencyListViewModel(private val repository: CurrencyRepository) : ViewModel() {
 
     private val _currencies = MutableLiveData<ResultState<List<CurrencyApiModel>>>()
     val currencies: LiveData<ResultState<List<CurrencyApiModel>>> = _currencies
@@ -277,27 +276,6 @@ class CurrencyListViewModel(private val repository: Repository) : ViewModel() {
             }
         }
     }
-
-    //widget
-    fun getWidgetData() = viewModelScope.launch(Dispatchers.IO) {
-        _widgetData.postValue(ResultState.Loading())
-        try {
-            val result1 = repository.getUSDtoRUB()
-            val result2 = repository.getUSDtoEUR()
-            val result3 = repository.getEURtoRUB()
-
-            val list = mutableListOf<Float>()
-            list.add(result1.conversion_rate)
-            list.add(result2.conversion_rate)
-            list.add(result3.conversion_rate)
-
-            _widgetData.postValue(ResultState.Success(list))
-
-        } catch (ex: Exception){
-            _widgetData.postValue(ResultState.Error(ex))
-        }
-    }
-
 
     companion object {
         private const val USD_CODE = "USD"

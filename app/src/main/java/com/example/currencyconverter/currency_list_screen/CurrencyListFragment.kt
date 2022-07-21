@@ -35,7 +35,6 @@ class CurrencyListFragment : Fragment(R.layout.fragment_currency_list) {
 
     private var prefsDecimal: SharedPreferences? = null
     private var prefsExchange: SharedPreferences? = null
-    private var prefsWidget: SharedPreferences? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -82,7 +81,6 @@ class CurrencyListFragment : Fragment(R.layout.fragment_currency_list) {
             if (it) {
                 viewModel.getExchangeRates()
                 viewModel.getAllCurrencies()
-                viewModel.getWidgetData()
                 getCurrenciesFromDb(!IS_FAVOURITE)
             } else {
                 getCurrenciesFromDb(!IS_FAVOURITE)
@@ -189,8 +187,6 @@ class CurrencyListFragment : Fragment(R.layout.fragment_currency_list) {
                 }
             }
         }
-
-        getWidgetData()
     }
 
 
@@ -295,30 +291,6 @@ class CurrencyListFragment : Fragment(R.layout.fragment_currency_list) {
             setCurrencyValues()
         }
     }
-
-    private fun getWidgetData() {
-        prefsWidget = activity?.getSharedPreferences(MainActivity.PREF_WIDGET_NAME, Context.MODE_PRIVATE)
-        viewModel.widgetData.observe(viewLifecycleOwner) {
-            when (it) {
-                is ResultState.Error -> {
-                    Toast.makeText(requireContext(), R.string.widget_error, Toast.LENGTH_SHORT)
-                        .show()
-                }
-                is ResultState.Loading -> {
-                    Toast.makeText(requireContext(), R.string.widget_loading, Toast.LENGTH_SHORT)
-                        .show()
-                }
-                is ResultState.Success -> {
-                    Toast.makeText(requireContext(), R.string.widget_success, Toast.LENGTH_SHORT)
-                        .show()
-                    prefsWidget?.edit()?.putFloat(MainActivity.PREF_WIDGET_KEY1, it.data[0])?.apply()
-                    prefsWidget?.edit()?.putFloat(MainActivity.PREF_WIDGET_KEY2, it.data[1])?.apply()
-                    prefsWidget?.edit()?.putFloat(MainActivity.PREF_WIDGET_KEY3, it.data[2])?.apply()
-                }
-            }
-        }
-    }
-
 
     companion object {
         private const val ORDER_POSITION_FIRST_RES = 1

@@ -140,12 +140,6 @@ class MainActivity : AppCompatActivity() {
         const val PREF_NIGHT_KEY = "night_mode"
         const val PREF_NIGHT_VAL = false
 
-        const val PREF_WIDGET_NAME = "widget"
-        const val PREF_WIDGET_KEY1 = "usd_to_rub"
-        const val PREF_WIDGET_KEY2 = "usd_to_eur"
-        const val PREF_WIDGET_KEY3 = "eur_to_rub"
-        const val DEF_VAL_WIDGET = 1f
-
         private var CURRENCY_LIST_TITLE = R.string.currency_list_title
         private var CRYPTO_LIST_TITLE = R.string.crypto_title
         private var CRYPTO_GRAPHIC_TITLE = R.string.crypto_chart
