@@ -16,8 +16,8 @@ class InternetAttentionDialogFragment : DialogFragment() {
         }
         return AlertDialog.Builder(requireContext())
             .setCancelable(true)
-            .setTitle("Attention")
-            .setNegativeButton("Dismiss", listener)
+            .setTitle(R.string.internet_attention_dialog_title)
+            .setNegativeButton(R.string.internet_attention_negative_btn_text, listener)
             .setView(R.layout.dialog_internet_attention)
             .create()
     }

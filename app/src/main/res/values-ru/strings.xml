@@ -48,7 +48,6 @@
     <string name="euro_plug">1 EUR</string>
     <string name="rub_plug">1 RUB</string>
 
-    <string name="widget_error">При загрузке данных виджета произощла ошибка</string>
-    <string name="widget_loading">Загрузка данных виджета</string>
-    <string name="widget_success">Загрузка данных прошла успешно</string>
+    <string name="internet_attention_dialog_title">Предупреждение</string>
+    <string name="internet_attention_negative_btn_text">Отмена</string>
 </resources>
