@@ -39,7 +39,8 @@ class CurrencyListFragment : Fragment(R.layout.fragment_currency_list) {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         adapter =
-            CurrencyListAdapter(layoutInflater, object : CurrencyListAdapter.CurrencyClickListener {
+            CurrencyListAdapter(
+                object : CurrencyListAdapter.CurrencyClickListener {
                 override fun onCurrencyClicked(item: CurrencyItem) {
                     currencyCode2 = item.code
                     executionOrder = ORDER_POSITION_FIRST_RES

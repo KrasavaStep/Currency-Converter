@@ -36,7 +36,6 @@ class CryptocurrencyFragment : Fragment(R.layout.fragment_cryptocurrency) {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         adapter = CryptocurrencyAdapter(
-            layoutInflater,
             object : CryptocurrencyAdapter.CryptoClickListener {
                 override fun onCryptoClicked(item: CryptocurrencyItem) {
                     val action =

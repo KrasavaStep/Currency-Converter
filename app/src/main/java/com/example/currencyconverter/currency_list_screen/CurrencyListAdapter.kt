@@ -11,11 +11,11 @@ import com.example.currencyconverter.databinding.CurrencyListItemBinding
 import com.example.currencyconverter.data.db.entities.CurrencyItem
 
 class CurrencyListAdapter(
-    private val layoutInflater: LayoutInflater,
     private val clickListener: CurrencyClickListener
 ) : ListAdapter<CurrencyItem, CurrencyListAdapter.ViewHolder>(DIFF_CALLBACK) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        val layoutInflater = LayoutInflater.from(parent.context)
         val binding = CurrencyListItemBinding.inflate(layoutInflater, parent, false)
         return ViewHolder(binding)
     }

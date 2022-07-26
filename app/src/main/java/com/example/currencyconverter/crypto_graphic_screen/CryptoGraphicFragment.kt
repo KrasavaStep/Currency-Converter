@@ -102,7 +102,6 @@ class CryptoGraphicFragment : Fragment(R.layout.fragment_crypto_graphic) {
         private const val SCALE_X_RES = R.integer.SCALE_X
         private const val SCALE_Y_RES = R.integer.SCALE_Y
         private const val TAG_RES = R.string.crypto_gr_tag
-
     }
 
 }

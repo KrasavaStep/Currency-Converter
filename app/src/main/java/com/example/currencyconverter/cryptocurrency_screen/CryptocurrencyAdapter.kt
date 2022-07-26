@@ -17,11 +17,11 @@ import com.example.currencyconverter.databinding.CryptoListItemBinding
 import kotlin.math.roundToInt
 
 class CryptocurrencyAdapter(
-    private val layoutInflater: LayoutInflater,
     private val clickListener: CryptoClickListener
 ) : ListAdapter<CryptocurrencyItem, CryptocurrencyAdapter.ViewHolder>(DIFF_CALLBACK) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        val layoutInflater = LayoutInflater.from(parent.context)
         val binding = CryptoListItemBinding.inflate(layoutInflater, parent, false)
         return ViewHolder(binding)
     }
